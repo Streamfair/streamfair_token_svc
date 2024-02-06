@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+import "refresh_token/refresh_token.proto";
+
+option go_package = "github.com/Streamfair/streamfair_token_svc/pb/refresh_token";
+
+message CreateRefreshTokenRequest {
+    int64 user_id = 1;
+    string token = 2;
+    google.protobuf.Timestamp expires_at = 4;
+}
+
+message CreateRefreshTokenResponse {
+    RefreshToken refresh_token = 1;
+}

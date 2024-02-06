@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/Streamfair/streamfair_token_svc/pb/token";
+
+message Token {
+    int64 id = 1;
+    int64 user_id = 2;
+    string token_type = 3;
+    string token = 4;
+    bool revoked = 5;
+    google.protobuf.Timestamp expires_at = 6;
+    google.protobuf.Timestamp created_at = 7;
+}
