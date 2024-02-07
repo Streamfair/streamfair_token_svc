@@ -1,6 +1,6 @@
 # Variables
 GRPC_PORT := 9092
-HTTP_PORT := 5441
+DB_PORT := 5434
 DB_CONTAINER_NAME := db_token_service
 DB_NAME := streamfair_token_service_db
 DB_USER := root
@@ -17,7 +17,7 @@ OUT ?= 0
 # Targets
 postgres:
 	@echo "Starting ${DB_CONTAINER_NAME}..."
-	docker run --name ${DB_CONTAINER_NAME} -p ${HTTP_PORT}:5432 -e POSTGRES_USER=${DB_USER} -e POSTGRES_PASSWORD=${DB_PASSWORD} -d postgres:16-alpine
+	docker run --name ${DB_CONTAINER_NAME} -p ${DB_PORT}:5432 -e POSTGRES_USER=${DB_USER} -e POSTGRES_PASSWORD=${DB_PASSWORD} -d postgres:16-alpine
 
 createdb:
 	@echo "Creating database..."
@@ -33,7 +33,7 @@ createmigration:
 
 migrateup migrateup1 migratedown migratedown1:
 	@echo "Migrating..."
-	migrate -path db/migration -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${HTTP_PORT}/${DB_NAME}?sslmode=disable" -verbose $(if $(filter migrateup1 migratedown1,$@),$(subst migrate,,$@),) $(if $(filter migrateup migratedown,$@),up,down) $(if $(filter migrateup1 migratedown1,$@),1,)
+	migrate -path db/migration -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=disable" -verbose $(if $(filter migrateup1 migratedown1,$@),$(subst migrate,,$@),) $(if $(filter migrateup migratedown,$@),up,down) $(if $(filter migrateup1 migratedown1,$@),1,)
 
 dbclean: migratedown migrateup
 	clear
