@@ -62,6 +62,16 @@ apitest:
 		go test -tags=-coverage -v -cover ./api ; \
 	fi
 
+servertest:
+	@if [ $(OUT) -eq  1 ]; then \
+		go test -v -cover -count=1 ./gapi > server_tests.log; \
+	else \
+		go test -v -cover -count=1 ./gapi ; \
+	fi
+
+clean:
+	rm -f coverage.out *_tests.log
+
 coverage_html:
 	go test -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out
@@ -72,9 +82,6 @@ server:
 
 mock:
 	mockgen -source=db/sqlc/store.go -destination=db/mock/store_mock.go
-
-clean:
-	rm -f coverage.out *_tests.log
 
 evans:
 	evans --host ${DB_HOST} --port ${GRPC_PORT} -r repl
@@ -115,3 +122,4 @@ clean_refresh_token_dir:
         clean evans proto_core proto_token proto_rftoken \
         create_token_dir create_refresh_token_dir clean_pb \
         clean_token_dir clean_refresh_token_dir proto \
+		servertest dbclean
