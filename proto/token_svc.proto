@@ -29,7 +29,7 @@ import "refresh_token/rpc_verify_refresh_token.proto";
 
 option go_package = "github.com/Streamfair/streamfair_token_svc/pb";
 
-service TokenManagementService {
+service TokenService {
     // Tokens
     rpc BlacklistToken(BlacklistTokenRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
