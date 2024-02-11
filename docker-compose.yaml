@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=streamfair_token_service_db
+    ports:
+      - "5434:5432"
+    networks:
+      - db_access_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9390:9092"
+      - "8380:8082"
+    environment:
+      - DB_SOURCE_TOKEN_SERVICE=postgresql://root:secret@db:5432/streamfair_token_service_db?sslmode=disable
+    depends_on:
+      - db
+    networks:
+      - streamfair_internal_network
+      - db_access_network
+    entrypoint: [ "/streamfair_token_svc/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/start.sh" ]
+    command: [ "/streamfair_token_svc/token_svc" ]
+
+networks:
+  db_access_network:
+    driver: bridge
+  streamfair_internal_network:
+    external: true
