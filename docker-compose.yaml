@@ -18,8 +18,8 @@ services:
     ports:
       - "9390:9092"
       - "8380:8082"
-    environment:
-      - DB_SOURCE_TOKEN_SERVICE=postgresql://root:secret@db:5432/streamfair_token_service_db?sslmode=disable
+    env_file:
+      - app.env
     depends_on:
       - db
     networks:

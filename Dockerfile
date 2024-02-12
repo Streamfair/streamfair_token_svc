@@ -15,7 +15,6 @@ COPY --from=build /streamfair_token_svc/token_svc .
 # Copy the downloaded migration binary from the build stage
 COPY --from=build /streamfair_token_svc/migrate ./migrate
 
-COPY app.env .
 COPY start.sh .
 COPY wait-for.sh .
 COPY db/migration ./migration
