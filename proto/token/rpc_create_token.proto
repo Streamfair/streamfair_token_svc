@@ -9,9 +9,7 @@ option go_package = "github.com/Streamfair/streamfair_token_svc/pb/token";
 
 message CreateTokenRequest {
     int64 user_id = 1;
-    string token_type = 2;
-    string token = 3;
-    google.protobuf.Timestamp expires_at = 4;
+    string expires_at = 4;
 }
 
 message CreateTokenResponse {

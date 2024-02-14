@@ -40,11 +40,11 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 	}
 
 	server := &Server{
-		config:     config,
-		store:      store,
-		grpcServer: grpc.NewServer(),
-		httpServer: &http.Server{Handler: nil},
-		healthSrv:  health.NewServer(),
+		config:          config,
+		store:           store,
+		grpcServer:      grpc.NewServer(),
+		httpServer:      &http.Server{Handler: nil},
+		healthSrv:       health.NewServer(),
 		localTokenMaker: localTokenMaker,
 	}
 
