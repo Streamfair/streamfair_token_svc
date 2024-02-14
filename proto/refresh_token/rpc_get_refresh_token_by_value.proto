@@ -7,7 +7,7 @@ import "refresh_token/refresh_token.proto";
 option go_package = "github.com/Streamfair/streamfair_token_svc/pb/refresh_token";
 
 message GetRefreshTokenByValueRequest {
-    string token = 1;
+    string refresh_token = 1;
 }
 
 message GetRefreshTokenByValueResponse {
