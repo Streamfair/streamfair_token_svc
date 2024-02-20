@@ -8,16 +8,9 @@ package db
 import (
 	"context"
 	"time"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
-
-const blacklistRefreshToken = `-- name: BlacklistRefreshToken :exec
-UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE token = $1
-`
-
-func (q *Queries) BlacklistRefreshToken(ctx context.Context, token string) error {
-	_, err := q.db.Exec(ctx, blacklistRefreshToken, token)
-	return err
-}
 
 const createRefreshToken = `-- name: CreateRefreshToken :one
 INSERT INTO "token_svc"."RefreshTokens" (
@@ -26,7 +19,7 @@ INSERT INTO "token_svc"."RefreshTokens" (
     expires_at
 ) VALUES (
     $1, $2, $3
-) RETURNING id, user_id, token, revoked, expires_at, created_at
+) RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
 type CreateRefreshTokenParams struct {
@@ -45,6 +38,7 @@ func (q *Queries) CreateRefreshToken(ctx context.Context, arg CreateRefreshToken
 		&i.Revoked,
 		&i.ExpiresAt,
 		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
@@ -59,7 +53,7 @@ func (q *Queries) DeleteRefreshToken(ctx context.Context, id int64) error {
 }
 
 const getRefreshTokenByID = `-- name: GetRefreshTokenByID :one
-SELECT id, user_id, token, revoked, expires_at, created_at FROM "token_svc"."RefreshTokens" WHERE id = $1 LIMIT 1
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."RefreshTokens" WHERE id = $1 LIMIT 1
 `
 
 func (q *Queries) GetRefreshTokenByID(ctx context.Context, id int64) (TokenSvcRefreshToken, error) {
@@ -72,12 +66,13 @@ func (q *Queries) GetRefreshTokenByID(ctx context.Context, id int64) (TokenSvcRe
 		&i.Revoked,
 		&i.ExpiresAt,
 		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
 
 const getRefreshTokenByValue = `-- name: GetRefreshTokenByValue :one
-SELECT id, user_id, token, revoked, expires_at, created_at FROM "token_svc"."RefreshTokens" WHERE token = $1 LIMIT 1
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."RefreshTokens" WHERE token = $1 LIMIT 1
 `
 
 func (q *Queries) GetRefreshTokenByValue(ctx context.Context, token string) (TokenSvcRefreshToken, error) {
@@ -90,50 +85,13 @@ func (q *Queries) GetRefreshTokenByValue(ctx context.Context, token string) (Tok
 		&i.Revoked,
 		&i.ExpiresAt,
 		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }
 
-const getRevokedRefreshTokens = `-- name: GetRevokedRefreshTokens :many
-SELECT id, user_id, token, revoked, expires_at, created_at
-FROM "token_svc"."RefreshTokens"
-WHERE revoked = true ORDER BY created_at DESC LIMIT $1 OFFSET $2
-`
-
-type GetRevokedRefreshTokensParams struct {
-	Limit  int32 `json:"limit"`
-	Offset int32 `json:"offset"`
-}
-
-func (q *Queries) GetRevokedRefreshTokens(ctx context.Context, arg GetRevokedRefreshTokensParams) ([]TokenSvcRefreshToken, error) {
-	rows, err := q.db.Query(ctx, getRevokedRefreshTokens, arg.Limit, arg.Offset)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []TokenSvcRefreshToken{}
-	for rows.Next() {
-		var i TokenSvcRefreshToken
-		if err := rows.Scan(
-			&i.ID,
-			&i.UserID,
-			&i.Token,
-			&i.Revoked,
-			&i.ExpiresAt,
-			&i.CreatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const listRefreshTokens = `-- name: ListRefreshTokens :many
-SELECT id, user_id, token, revoked, expires_at, created_at FROM "token_svc"."RefreshTokens" ORDER BY id LIMIT $1 OFFSET $2
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."RefreshTokens" ORDER BY id LIMIT $1 OFFSET $2
 `
 
 type ListRefreshTokensParams struct {
@@ -157,6 +115,7 @@ func (q *Queries) ListRefreshTokens(ctx context.Context, arg ListRefreshTokensPa
 			&i.Revoked,
 			&i.ExpiresAt,
 			&i.CreatedAt,
+			&i.UpdatedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -168,50 +127,93 @@ func (q *Queries) ListRefreshTokens(ctx context.Context, arg ListRefreshTokensPa
 	return items, nil
 }
 
-const revokeRefreshToken = `-- name: RevokeRefreshToken :exec
+const listRevokedRefreshTokens = `-- name: ListRevokedRefreshTokens :many
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at
+FROM "token_svc"."RefreshTokens"
+WHERE revoked = true ORDER BY created_at DESC LIMIT $1 OFFSET $2
+`
+
+type ListRevokedRefreshTokensParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+func (q *Queries) ListRevokedRefreshTokens(ctx context.Context, arg ListRevokedRefreshTokensParams) ([]TokenSvcRefreshToken, error) {
+	rows, err := q.db.Query(ctx, listRevokedRefreshTokens, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []TokenSvcRefreshToken{}
+	for rows.Next() {
+		var i TokenSvcRefreshToken
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Token,
+			&i.Revoked,
+			&i.ExpiresAt,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const revokeRefreshTokenByID = `-- name: RevokeRefreshTokenByID :exec
 UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE id = $1
 `
 
-func (q *Queries) RevokeRefreshToken(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, revokeRefreshToken, id)
+func (q *Queries) RevokeRefreshTokenByID(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, revokeRefreshTokenByID, id)
+	return err
+}
+
+const revokeRefreshTokenByValue = `-- name: RevokeRefreshTokenByValue :exec
+UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE token = $1
+`
+
+func (q *Queries) RevokeRefreshTokenByValue(ctx context.Context, token string) error {
+	_, err := q.db.Exec(ctx, revokeRefreshTokenByValue, token)
 	return err
 }
 
 const updateRefreshToken = `-- name: UpdateRefreshToken :one
 UPDATE "token_svc"."RefreshTokens" 
 SET 
-    user_id = COALESCE($2, user_id),
-    token = COALESCE($3, token),
-    expires_at = COALESCE($4, expires_at)
-WHERE id = $1 RETURNING token, expires_at
+    user_id = COALESCE($1, user_id),
+    updated_at = now()
+WHERE id = $2 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
 type UpdateRefreshTokenParams struct {
-	ID        int64     `json:"id"`
-	UserID    int64     `json:"user_id"`
-	Token     string    `json:"token"`
-	ExpiresAt time.Time `json:"expires_at"`
+	UserID pgtype.Int8 `json:"user_id"`
+	ID     int64       `json:"id"`
 }
 
-type UpdateRefreshTokenRow struct {
-	Token     string    `json:"token"`
-	ExpiresAt time.Time `json:"expires_at"`
-}
-
-func (q *Queries) UpdateRefreshToken(ctx context.Context, arg UpdateRefreshTokenParams) (UpdateRefreshTokenRow, error) {
-	row := q.db.QueryRow(ctx, updateRefreshToken,
-		arg.ID,
-		arg.UserID,
-		arg.Token,
-		arg.ExpiresAt,
+func (q *Queries) UpdateRefreshToken(ctx context.Context, arg UpdateRefreshTokenParams) (TokenSvcRefreshToken, error) {
+	row := q.db.QueryRow(ctx, updateRefreshToken, arg.UserID, arg.ID)
+	var i TokenSvcRefreshToken
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Token,
+		&i.Revoked,
+		&i.ExpiresAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
-	var i UpdateRefreshTokenRow
-	err := row.Scan(&i.Token, &i.ExpiresAt)
 	return i, err
 }
 
 const verifyRefreshToken = `-- name: VerifyRefreshToken :one
-SELECT id, user_id, token, revoked, expires_at, created_at FROM "token_svc"."RefreshTokens"
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."RefreshTokens"
 WHERE token = $1 AND revoked = false AND expires_at > NOW() LIMIT 1
 `
 
@@ -225,6 +227,7 @@ func (q *Queries) VerifyRefreshToken(ctx context.Context, token string) (TokenSv
 		&i.Revoked,
 		&i.ExpiresAt,
 		&i.CreatedAt,
+		&i.UpdatedAt,
 	)
 	return i, err
 }

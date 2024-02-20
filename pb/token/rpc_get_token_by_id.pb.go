@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GetTokenByIDRequest struct {
+type GetTokenByIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -28,8 +28,8 @@ type GetTokenByIDRequest struct {
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *GetTokenByIDRequest) Reset() {
-	*x = GetTokenByIDRequest{}
+func (x *GetTokenByIdRequest) Reset() {
+	*x = GetTokenByIdRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_token_rpc_get_token_by_id_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -37,13 +37,13 @@ func (x *GetTokenByIDRequest) Reset() {
 	}
 }
 
-func (x *GetTokenByIDRequest) String() string {
+func (x *GetTokenByIdRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTokenByIDRequest) ProtoMessage() {}
+func (*GetTokenByIdRequest) ProtoMessage() {}
 
-func (x *GetTokenByIDRequest) ProtoReflect() protoreflect.Message {
+func (x *GetTokenByIdRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_token_rpc_get_token_by_id_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,19 +55,19 @@ func (x *GetTokenByIDRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTokenByIDRequest.ProtoReflect.Descriptor instead.
-func (*GetTokenByIDRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetTokenByIdRequest.ProtoReflect.Descriptor instead.
+func (*GetTokenByIdRequest) Descriptor() ([]byte, []int) {
 	return file_token_rpc_get_token_by_id_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetTokenByIDRequest) GetId() int64 {
+func (x *GetTokenByIdRequest) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-type GetTokenByIDResponse struct {
+type GetTokenByIdResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -75,8 +75,8 @@ type GetTokenByIDResponse struct {
 	Token *Token `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 }
 
-func (x *GetTokenByIDResponse) Reset() {
-	*x = GetTokenByIDResponse{}
+func (x *GetTokenByIdResponse) Reset() {
+	*x = GetTokenByIdResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_token_rpc_get_token_by_id_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -84,13 +84,13 @@ func (x *GetTokenByIDResponse) Reset() {
 	}
 }
 
-func (x *GetTokenByIDResponse) String() string {
+func (x *GetTokenByIdResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTokenByIDResponse) ProtoMessage() {}
+func (*GetTokenByIdResponse) ProtoMessage() {}
 
-func (x *GetTokenByIDResponse) ProtoReflect() protoreflect.Message {
+func (x *GetTokenByIdResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_token_rpc_get_token_by_id_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -102,12 +102,12 @@ func (x *GetTokenByIDResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTokenByIDResponse.ProtoReflect.Descriptor instead.
-func (*GetTokenByIDResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetTokenByIdResponse.ProtoReflect.Descriptor instead.
+func (*GetTokenByIdResponse) Descriptor() ([]byte, []int) {
 	return file_token_rpc_get_token_by_id_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetTokenByIDResponse) GetToken() *Token {
+func (x *GetTokenByIdResponse) GetToken() *Token {
 	if x != nil {
 		return x.Token
 	}
@@ -121,9 +121,9 @@ var file_token_rpc_get_token_by_id_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x62, 0x79, 0x5f, 0x69, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x12, 0x02, 0x70, 0x62, 0x1a, 0x11, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x2f, 0x74, 0x6f, 0x6b,
 	0x65, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x25, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x54,
-	0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
 	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x22,
-	0x37, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x44, 0x52,
+	0x37, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x64, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x6f, 0x6b, 0x65,
 	0x6e, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x35, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68,
@@ -147,12 +147,12 @@ func file_token_rpc_get_token_by_id_proto_rawDescGZIP() []byte {
 
 var file_token_rpc_get_token_by_id_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_token_rpc_get_token_by_id_proto_goTypes = []interface{}{
-	(*GetTokenByIDRequest)(nil),  // 0: pb.GetTokenByIDRequest
-	(*GetTokenByIDResponse)(nil), // 1: pb.GetTokenByIDResponse
+	(*GetTokenByIdRequest)(nil),  // 0: pb.GetTokenByIdRequest
+	(*GetTokenByIdResponse)(nil), // 1: pb.GetTokenByIdResponse
 	(*Token)(nil),                // 2: pb.Token
 }
 var file_token_rpc_get_token_by_id_proto_depIdxs = []int32{
-	2, // 0: pb.GetTokenByIDResponse.token:type_name -> pb.Token
+	2, // 0: pb.GetTokenByIdResponse.token:type_name -> pb.Token
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -168,7 +168,7 @@ func file_token_rpc_get_token_by_id_proto_init() {
 	file_token_token_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_token_rpc_get_token_by_id_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTokenByIDRequest); i {
+			switch v := v.(*GetTokenByIdRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -180,7 +180,7 @@ func file_token_rpc_get_token_by_id_proto_init() {
 			}
 		}
 		file_token_rpc_get_token_by_id_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetTokenByIDResponse); i {
+			switch v := v.(*GetTokenByIdResponse); i {
 			case 0:
 				return &v.state
 			case 1:

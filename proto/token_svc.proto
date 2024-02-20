@@ -4,15 +4,17 @@ package pb;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 import "token/rpc_create_token.proto";
-import "token/rpc_delete_token.proto";
-import "token/rpc_blacklist_token.proto";
-import "token/rpc_get_revoked_tokens.proto";
+import "token/rpc_delete_token_by_value.proto";
+import "token/rpc_delete_token_by_id.proto";
+import "token/rpc_revoke_token_by_id.proto";
+import "token/rpc_revoke_token_by_value.proto";
+import "token/rpc_list_revoked_tokens.proto";
 import "token/rpc_get_token_by_id.proto";
 import "token/rpc_get_token_by_value.proto";
 import "token/rpc_list_tokens.proto";
-import "token/rpc_revoke_token.proto";
 import "token/rpc_update_token.proto";
 import "token/rpc_verify_token.proto";
 
@@ -29,133 +31,241 @@ import "refresh_token/rpc_verify_refresh_token.proto";
 
 option go_package = "github.com/Streamfair/streamfair_token_svc/pb";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+	  title: "Streamfair Token Service";
+	  version: "1.1";
+	  contact: {
+		name: "Streamfair";
+		url: "https://github.com/Streamfair";
+		email: "nelix@posteo.de";
+	  };
+	};
+};
+
 service TokenService {
-    // Tokens
-    rpc BlacklistToken(BlacklistTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/blacklist_token"
-            body: "*"
-        };
-    }
+	// Tokens
+	rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse) {
+		option (google.api.http) = {
+			post: "/v1/create_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Create a new token.",
+			summary: "Create Token"
+		};
+	}
 
-    rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse) {
-        option (google.api.http) = {
-            post: "/v1/create_token"
-            body: "*"
-        };
-    }
+	rpc GetTokenById(GetTokenByIdRequest) returns (GetTokenByIdResponse) {
+		option (google.api.http) = {
+			post: "/v1/get_token_by_id"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Get a token by its ID.",
+			summary: "Get Token by ID"
+		};
+	}
+	
+	rpc GetTokenByValue(GetTokenByValueRequest) returns (GetTokenByValueResponse) {
+		option (google.api.http) = {
+			post: "/v1/get_token_by_value"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Get a token by its value.",
+			summary: "Get Token by Value"
+		};
+	}
 
-    rpc DeleteToken(DeleteTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/delete_token/{id}"
-        };
-    }
+	rpc RevokeTokenByValue(RevokeTokenByValueRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/revoke_token_by_value"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Revoke a token by its value.",
+			summary: "Revoke Token by Value"
+		};
+	}
 
-    rpc GetRevokedTokens(GetRevokedTokensRequest) returns (GetRevokedTokensResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_revoked_tokens"
-        };
-    }
+	rpc RevokeTokenById(RevokeTokenByIdRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/revoke_token_by_id"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Revoke a token by its ID.",
+			summary: "Revoke Token by ID"
+		};
+	}
 
-    rpc GetTokenByID(GetTokenByIDRequest) returns (GetTokenByIDResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_token_by_id/{id}"
-        };
-    }
+	rpc DeleteTokenById(DeleteTokenByIdRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/delete_token_by_id"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Delete a token by its ID.",
+			summary: "Delete Token by ID"
+		};
+	}
+	
+	rpc DeleteTokenByValue(DeleteTokenByValueRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/delete_token_by_value"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Delete a token by its value.",
+			summary: "Delete Token by Value"
+		};
+	}
+	
+	rpc ListRevokedTokens(ListRevokedTokensRequest) returns (ListRevokedTokensResponse) {
+		option (google.api.http) = {
+			post: "/v1/list_revoked_tokens"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "List all revoked tokens.",
+			summary: "List Revoked Tokens"
+		};
+	}
 
-    rpc GetTokenByValue(GetTokenByValueRequest) returns (GetTokenByValueResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_token_by_value/{token}"
-        };
-    }
+	rpc ListTokens(ListTokensRequest) returns (ListTokensResponse) {
+		option (google.api.http) = {
+			get: "/v1/list_tokens"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "List all tokens.",
+			summary: "List Tokens"
+		};
+	}
 
-    rpc ListTokens(ListTokensRequest) returns (ListTokensResponse) {
-        option (google.api.http) = {
-            get: "/v1/list_tokens"
-        };
-    }
+	rpc UpdateToken(UpdateTokenRequest) returns (UpdateTokenResponse) {
+		option (google.api.http) = {
+			patch: "/v1/update_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Update a token.",
+			summary: "Update Token"
+		};
+	}
 
-    rpc RevokeToken(RevokeTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/revoke_token"
-        };
-    }
+	rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {
+		option (google.api.http) = {
+			post: "/v1/verify_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Verify a token.",
+			summary: "Verify Token"
+		};
+	}
 
-    rpc UpdateToken(UpdateTokenRequest) returns (UpdateTokenResponse) {
-        option (google.api.http) = {
-            put: "/v1/update_token/{id}"
-            body: "*"
-        };
-    }
+	// Refresh tokens
 
-    rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {
-        option (google.api.http) = {
-            post: "/v1/verify_token"
-            body: "*"
-        };
-    }
+	rpc BlacklistRefreshToken(BlacklistRefreshTokenRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/blacklist_refresh_token"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Blacklist a refresh token.",
+			summary: "Blacklist Refresh Token"
+		};
+	}
 
-    // Refresh tokens
-    rpc BlacklistRefreshToken(BlacklistRefreshTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/blacklist_refresh_token"
-        };
-    }
+	rpc CreateRefreshToken(CreateRefreshTokenRequest) returns (CreateRefreshTokenResponse) {
+		option (google.api.http) = {
+			post: "/v1/create_refresh_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Create a new refresh token.",
+			summary: "Create Refresh Token"
+		};
+	}
 
-    rpc CreateRefreshToken(CreateRefreshTokenRequest) returns (CreateRefreshTokenResponse) {
-        option (google.api.http) = {
-            post: "/v1/create_refresh_token"
-            body: "*"
-        };
-    }
+	rpc DeleteRefreshToken(DeleteRefreshTokenRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			delete: "/v1/delete_refresh_token/{id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Delete a refresh token by its ID.",
+			summary: "Delete Refresh Token by ID"
+		};
+	}
 
-    rpc DeleteRefreshToken(DeleteRefreshTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/delete_refresh_token/{id}"
-        };
-    }
+	rpc GetRefreshTokenByID(GetRefreshTokenByIDRequest) returns (GetRefreshTokenByIDResponse) {
+		option (google.api.http) = {
+			get: "/v1/get_refresh_token_by_id/{id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Get a refresh token by its ID.",
+			summary: "Get Refresh Token by ID"
+		};
+	}
 
-    rpc GetRefreshTokenByID(GetRefreshTokenByIDRequest) returns (GetRefreshTokenByIDResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_refresh_token_by_id/{id}"
-        };
-    }
+	rpc GetRefreshTokenByValue(GetRefreshTokenByValueRequest) returns (GetRefreshTokenByValueResponse) {
+		option (google.api.http) = {
+			get: "/v1/get_refresh_token_by_value/{refresh_token}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Get a refresh token by its value.",
+			summary: "Get Refresh Token by Value"
+		};
+	}
 
-    rpc GetRefreshTokenByValue(GetRefreshTokenByValueRequest) returns (GetRefreshTokenByValueResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_refresh_token_by_value/{refresh_token}"
-        };
-    }
+	rpc GetRevokedRefreshTokens(GetRevokedRefreshTokensRequest) returns (GetRevokedRefreshTokensResponse) {
+		option (google.api.http) = {
+			get: "/v1/get_revoked_refresh_tokens"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Get all revoked refresh tokens.",
+			summary: "Get Revoked Refresh Tokens"
+		};
+	}
 
-    rpc GetRevokedRefreshTokens(GetRevokedRefreshTokensRequest) returns (GetRevokedRefreshTokensResponse) {
-        option (google.api.http) = {
-            get: "/v1/get_revoked_refresh_tokens"
-        };
-    }
+	rpc ListRefreshTokens(ListRefreshTokensRequest) returns (ListRefreshTokensResponse) {
+		option (google.api.http) = {
+			get: "/v1/list_refresh_tokens"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "List all refresh tokens.",
+			summary: "List Refresh Tokens"
+		};
+	}
 
-    rpc ListRefreshTokens(ListRefreshTokensRequest) returns (ListRefreshTokensResponse) {
-        option (google.api.http) = {
-            get: "/v1/list_refresh_tokens"
-        };
-    }
+	rpc RevokeRefreshToken(RevokeRefreshTokenRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/revoke_refresh_token"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Revoke a refresh token.",
+			summary: "Revoke Refresh Token"
+		};
+	}
 
-    rpc RevokeRefreshToken(RevokeRefreshTokenRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/revoke_refresh_token"
-        };
-    }
+	rpc UpdateRefreshToken(UpdateRefreshTokenRequest) returns (UpdateRefreshTokenResponse) {
+		option (google.api.http) = {
+			patch: "/v1/update_refresh_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Update a refresh token.",
+			summary: "Update Refresh Token"
+		};
+	}
 
-    rpc UpdateRefreshToken(UpdateRefreshTokenRequest) returns (UpdateRefreshTokenResponse) {
-        option (google.api.http) = {
-            put: "/v1/update_refresh_token/{id}"
-            body: "*"
-        };
-    }
-
-    rpc VerifyRefreshToken(VerifyRefreshTokenRequest) returns (VerifyRefreshTokenResponse) {
-        option (google.api.http) = {
-            post: "/v1/verify_refresh_token"
-            body: "*"
-        };
-    }
+	rpc VerifyRefreshToken(VerifyRefreshTokenRequest) returns (VerifyRefreshTokenResponse) {
+		option (google.api.http) = {
+			post: "/v1/verify_refresh_token"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description: "Verify a refresh token.",
+			summary: "Verify Refresh Token"
+		};
+	}
 }

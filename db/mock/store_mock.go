@@ -41,34 +41,6 @@ func (m *MockStore) EXPECT() *MockStoreMockRecorder {
 	return m.recorder
 }
 
-// BlacklistRefreshToken mocks base method.
-func (m *MockStore) BlacklistRefreshToken(ctx context.Context, token string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BlacklistRefreshToken", ctx, token)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// BlacklistRefreshToken indicates an expected call of BlacklistRefreshToken.
-func (mr *MockStoreMockRecorder) BlacklistRefreshToken(ctx, token any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BlacklistRefreshToken", reflect.TypeOf((*MockStore)(nil).BlacklistRefreshToken), ctx, token)
-}
-
-// BlacklistToken mocks base method.
-func (m *MockStore) BlacklistToken(ctx context.Context, token string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BlacklistToken", ctx, token)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// BlacklistToken indicates an expected call of BlacklistToken.
-func (mr *MockStoreMockRecorder) BlacklistToken(ctx, token any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BlacklistToken", reflect.TypeOf((*MockStore)(nil).BlacklistToken), ctx, token)
-}
-
 // CreateRefreshToken mocks base method.
 func (m *MockStore) CreateRefreshToken(ctx context.Context, arg db.CreateRefreshTokenParams) (db.TokenSvcRefreshToken, error) {
 	m.ctrl.T.Helper()
@@ -127,6 +99,20 @@ func (mr *MockStoreMockRecorder) DeleteToken(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteToken", reflect.TypeOf((*MockStore)(nil).DeleteToken), ctx, id)
 }
 
+// DeleteTokenByValue mocks base method.
+func (m *MockStore) DeleteTokenByValue(ctx context.Context, token string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteTokenByValue", ctx, token)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteTokenByValue indicates an expected call of DeleteTokenByValue.
+func (mr *MockStoreMockRecorder) DeleteTokenByValue(ctx, token any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTokenByValue", reflect.TypeOf((*MockStore)(nil).DeleteTokenByValue), ctx, token)
+}
+
 // GetRefreshTokenByID mocks base method.
 func (m *MockStore) GetRefreshTokenByID(ctx context.Context, id int64) (db.TokenSvcRefreshToken, error) {
 	m.ctrl.T.Helper()
@@ -155,36 +141,6 @@ func (m *MockStore) GetRefreshTokenByValue(ctx context.Context, token string) (d
 func (mr *MockStoreMockRecorder) GetRefreshTokenByValue(ctx, token any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRefreshTokenByValue", reflect.TypeOf((*MockStore)(nil).GetRefreshTokenByValue), ctx, token)
-}
-
-// GetRevokedRefreshTokens mocks base method.
-func (m *MockStore) GetRevokedRefreshTokens(ctx context.Context, arg db.GetRevokedRefreshTokensParams) ([]db.TokenSvcRefreshToken, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRevokedRefreshTokens", ctx, arg)
-	ret0, _ := ret[0].([]db.TokenSvcRefreshToken)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetRevokedRefreshTokens indicates an expected call of GetRevokedRefreshTokens.
-func (mr *MockStoreMockRecorder) GetRevokedRefreshTokens(ctx, arg any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRevokedRefreshTokens", reflect.TypeOf((*MockStore)(nil).GetRevokedRefreshTokens), ctx, arg)
-}
-
-// GetRevokedTokens mocks base method.
-func (m *MockStore) GetRevokedTokens(ctx context.Context, arg db.GetRevokedTokensParams) ([]db.TokenSvcToken, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRevokedTokens", ctx, arg)
-	ret0, _ := ret[0].([]db.TokenSvcToken)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetRevokedTokens indicates an expected call of GetRevokedTokens.
-func (mr *MockStoreMockRecorder) GetRevokedTokens(ctx, arg any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRevokedTokens", reflect.TypeOf((*MockStore)(nil).GetRevokedTokens), ctx, arg)
 }
 
 // GetTokenByID mocks base method.
@@ -232,6 +188,36 @@ func (mr *MockStoreMockRecorder) ListRefreshTokens(ctx, arg any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRefreshTokens", reflect.TypeOf((*MockStore)(nil).ListRefreshTokens), ctx, arg)
 }
 
+// ListRevokedRefreshTokens mocks base method.
+func (m *MockStore) ListRevokedRefreshTokens(ctx context.Context, arg db.ListRevokedRefreshTokensParams) ([]db.TokenSvcRefreshToken, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListRevokedRefreshTokens", ctx, arg)
+	ret0, _ := ret[0].([]db.TokenSvcRefreshToken)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListRevokedRefreshTokens indicates an expected call of ListRevokedRefreshTokens.
+func (mr *MockStoreMockRecorder) ListRevokedRefreshTokens(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRevokedRefreshTokens", reflect.TypeOf((*MockStore)(nil).ListRevokedRefreshTokens), ctx, arg)
+}
+
+// ListRevokedTokens mocks base method.
+func (m *MockStore) ListRevokedTokens(ctx context.Context, arg db.ListRevokedTokensParams) ([]db.TokenSvcToken, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListRevokedTokens", ctx, arg)
+	ret0, _ := ret[0].([]db.TokenSvcToken)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListRevokedTokens indicates an expected call of ListRevokedTokens.
+func (mr *MockStoreMockRecorder) ListRevokedTokens(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRevokedTokens", reflect.TypeOf((*MockStore)(nil).ListRevokedTokens), ctx, arg)
+}
+
 // ListTokens mocks base method.
 func (m *MockStore) ListTokens(ctx context.Context, arg db.ListTokensParams) ([]db.TokenSvcToken, error) {
 	m.ctrl.T.Helper()
@@ -261,39 +247,67 @@ func (mr *MockStoreMockRecorder) Ping(ctx, timeout any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Ping", reflect.TypeOf((*MockStore)(nil).Ping), ctx, timeout)
 }
 
-// RevokeRefreshToken mocks base method.
-func (m *MockStore) RevokeRefreshToken(ctx context.Context, id int64) error {
+// RevokeRefreshTokenByID mocks base method.
+func (m *MockStore) RevokeRefreshTokenByID(ctx context.Context, id int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RevokeRefreshToken", ctx, id)
+	ret := m.ctrl.Call(m, "RevokeRefreshTokenByID", ctx, id)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RevokeRefreshToken indicates an expected call of RevokeRefreshToken.
-func (mr *MockStoreMockRecorder) RevokeRefreshToken(ctx, id any) *gomock.Call {
+// RevokeRefreshTokenByID indicates an expected call of RevokeRefreshTokenByID.
+func (mr *MockStoreMockRecorder) RevokeRefreshTokenByID(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeRefreshToken", reflect.TypeOf((*MockStore)(nil).RevokeRefreshToken), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeRefreshTokenByID", reflect.TypeOf((*MockStore)(nil).RevokeRefreshTokenByID), ctx, id)
 }
 
-// RevokeToken mocks base method.
-func (m *MockStore) RevokeToken(ctx context.Context, id int64) error {
+// RevokeRefreshTokenByValue mocks base method.
+func (m *MockStore) RevokeRefreshTokenByValue(ctx context.Context, token string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RevokeToken", ctx, id)
+	ret := m.ctrl.Call(m, "RevokeRefreshTokenByValue", ctx, token)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RevokeToken indicates an expected call of RevokeToken.
-func (mr *MockStoreMockRecorder) RevokeToken(ctx, id any) *gomock.Call {
+// RevokeRefreshTokenByValue indicates an expected call of RevokeRefreshTokenByValue.
+func (mr *MockStoreMockRecorder) RevokeRefreshTokenByValue(ctx, token any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeToken", reflect.TypeOf((*MockStore)(nil).RevokeToken), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeRefreshTokenByValue", reflect.TypeOf((*MockStore)(nil).RevokeRefreshTokenByValue), ctx, token)
+}
+
+// RevokeTokenByID mocks base method.
+func (m *MockStore) RevokeTokenByID(ctx context.Context, id int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RevokeTokenByID", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RevokeTokenByID indicates an expected call of RevokeTokenByID.
+func (mr *MockStoreMockRecorder) RevokeTokenByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeTokenByID", reflect.TypeOf((*MockStore)(nil).RevokeTokenByID), ctx, id)
+}
+
+// RevokeTokenByValue mocks base method.
+func (m *MockStore) RevokeTokenByValue(ctx context.Context, token string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RevokeTokenByValue", ctx, token)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RevokeTokenByValue indicates an expected call of RevokeTokenByValue.
+func (mr *MockStoreMockRecorder) RevokeTokenByValue(ctx, token any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RevokeTokenByValue", reflect.TypeOf((*MockStore)(nil).RevokeTokenByValue), ctx, token)
 }
 
 // UpdateRefreshToken mocks base method.
-func (m *MockStore) UpdateRefreshToken(ctx context.Context, arg db.UpdateRefreshTokenParams) (db.UpdateRefreshTokenRow, error) {
+func (m *MockStore) UpdateRefreshToken(ctx context.Context, arg db.UpdateRefreshTokenParams) (db.TokenSvcRefreshToken, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateRefreshToken", ctx, arg)
-	ret0, _ := ret[0].(db.UpdateRefreshTokenRow)
+	ret0, _ := ret[0].(db.TokenSvcRefreshToken)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -305,10 +319,10 @@ func (mr *MockStoreMockRecorder) UpdateRefreshToken(ctx, arg any) *gomock.Call {
 }
 
 // UpdateToken mocks base method.
-func (m *MockStore) UpdateToken(ctx context.Context, arg db.UpdateTokenParams) (db.UpdateTokenRow, error) {
+func (m *MockStore) UpdateToken(ctx context.Context, arg db.UpdateTokenParams) (db.TokenSvcToken, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateToken", ctx, arg)
-	ret0, _ := ret[0].(db.UpdateTokenRow)
+	ret0, _ := ret[0].(db.TokenSvcToken)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

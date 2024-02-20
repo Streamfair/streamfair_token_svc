@@ -7,7 +7,8 @@ CREATE TABLE "token_svc"."Tokens" (
   "token" VARCHAR(255) NOT NULL,
   "revoked" BOOLEAN NOT NULL DEFAULT false,
   "expires_at" TIMESTAMPTZ NOT NULL,
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now())
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "token_svc"."RefreshTokens" (
@@ -16,7 +17,8 @@ CREATE TABLE "token_svc"."RefreshTokens" (
   "token" VARCHAR(255) NOT NULL,
   "revoked" BOOLEAN NOT NULL DEFAULT false,
   "expires_at" TIMESTAMPTZ NOT NULL,
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now())
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE INDEX "idx_tokens_id" ON "token_svc"."Tokens" ("id");

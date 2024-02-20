@@ -8,7 +8,6 @@ import (
 	pb "github.com/Streamfair/streamfair_token_svc/pb/token"
 	"github.com/Streamfair/streamfair_token_svc/validator"
 	"github.com/jackc/pgx/v5/pgtype"
-	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -17,9 +16,9 @@ func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenReques
 	// Validate the request
 	violations := validateCreateTokenRequest(req)
 	if len(violations) > 0 {
-		return nil, invalidArgumentError(violations)
+		return nil, invalidArgumentErrors(violations)
 	}
-	
+
 	// Create a new token
 	duration, _ := time.ParseDuration(req.GetExpiresAt())
 	accessToken, accessPayload, err := server.localTokenMaker.CreateLocalToken(duration)
@@ -45,13 +44,18 @@ func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenReques
 	return rsp, nil
 }
 
-func validateCreateTokenRequest(req *pb.CreateTokenRequest) (violations []*errdetails.BadRequest_FieldViolation) {
-	if err := validator.ValidateUserId(req.GetUserId()); err != nil {
-		violations = append(violations, fieldViolation("user_id", err))
+// validateCreateTokenRequest validates the create token request and returns a slice of custom errors.
+func validateCreateTokenRequest(req *pb.CreateTokenRequest) (violations []*CustomError) {
+	if err := validator.ValidateId(req.GetUserId()); err != nil {
+		violations = append(violations, (&CustomError{
+			StatusCode: codes.NotFound,
+		}).WithDetails("user_id", err))
 	}
 
 	if err := validator.ValidateDuration(req.GetExpiresAt()); err != nil {
-		violations = append(violations, fieldViolation("expires_at", err))
+		violations = append(violations, (&CustomError{
+			StatusCode: codes.OutOfRange,
+		}).WithDetails("expires_at", err))
 	}
 
 	return violations

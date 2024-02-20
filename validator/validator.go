@@ -5,17 +5,14 @@ import (
 	"time"
 )
 
-// Function to validate a string value based on the minimum and maximum length
-func ValidateString(value string, minLen int, maxLen int) error {
-	n := len(value)
-	if n < minLen || n > maxLen {
-		return fmt.Errorf("must contain %d-%d characters", minLen, maxLen)
-	}
-	return nil
-}
+const (
+	// Define Limit and Offset for the API
+	MaxLimit  = 100
+	MaxOffset = 100
+)
 
 // Function to validate UserId
-func ValidateUserId(userId int64) error {
+func ValidateId(userId int64) error {
 	// Assuming the UserId should be a positive integer
 	if userId <= 0 {
 		return fmt.Errorf("UserId must be a positive integer")
@@ -29,5 +26,25 @@ func ValidateDuration(durationStr string) error {
 	if err != nil {
 		return fmt.Errorf("invalid duration format: %w", err)
 	}
+	return nil
+}
+
+// Function to validate offset parameters
+func ValidateLimit(limit int32) error {
+	// Define a reasonable range for limit (e.g.,  1-100)
+	if limit <  1 || limit >  MaxLimit {
+		return fmt.Errorf("limit must be between  1 and  %d", MaxLimit)
+	}
+
+	return nil
+}
+
+// Function to validate limit parameters
+func ValidateOffset(offset int32) error {
+	// Offset should not be negative
+	if offset <  0 || MaxOffset >  100{
+		return fmt.Errorf("offset must be non-negative and less than %d", MaxOffset)
+	}
+
 	return nil
 }

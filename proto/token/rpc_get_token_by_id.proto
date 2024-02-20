@@ -6,10 +6,10 @@ import "token/token.proto";
 
 option go_package = "github.com/Streamfair/streamfair_token_svc/pb/token";
 
-message GetTokenByIDRequest {
+message GetTokenByIdRequest {
     int64 id = 1;
 }
 
-message GetTokenByIDResponse {
+message GetTokenByIdResponse {
     Token token = 1;
 }
