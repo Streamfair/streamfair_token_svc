@@ -3,37 +3,56 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
+	"log"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/Streamfair/streamfair_token_svc/gapi"
 	"github.com/Streamfair/streamfair_token_svc/util"
+	"github.com/golang-migrate/migrate/v4"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
 	fmt.Println("Hello, Streamfair Token Management Service!")
+
 	config, err := util.LoadConfig(".")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "config: error while loading config: %v\n", err)
+		log.Printf("config: error while loading config: %v\n", err)
 	}
 
 	poolConfig, err := pgxpool.ParseConfig(config.DBSource)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "config: error while parsing config: %v\n", err)
+		log.Printf("config: error while parsing config: %v\n", err)
 	}
 
 	conn, err := pgxpool.New(context.Background(), poolConfig.ConnString())
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "db connection: unable to create connection pool: %v\n", err)
+		log.Printf("db connection: unable to create connection pool: %v\n", err)
 	}
 
 	store := db.NewStore(conn)
 	server, err := gapi.NewServer(config, store)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "server: error while creating server: %v\n", err)
+		log.Printf("server: error while creating server: %v\n", err)
 	}
+
+	runDBMigration(config.MigrationURL, config.DBSource)
 
 	go server.RunGrpcGatewayServer()
 	server.RunGrpcServer()
+}
+
+func runDBMigration(migrationURL string, dbSource string) {
+	migration, err := migrate.New(migrationURL, dbSource)
+	if err != nil {
+		log.Fatalf("db migration: unable to create migration: %v\n", err)
+	}
+
+	if err = migration.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatalf("db migration: unable to apply migration: %v\n", err)
+	}
+
+	log.Println("db migrated successfully")
 }
