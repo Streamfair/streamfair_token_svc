@@ -6,11 +6,11 @@ import (
 	"log"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
-	_ "github.com/golang-migrate/migrate/v4/source/file"
-	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/Streamfair/streamfair_token_svc/gapi"
 	"github.com/Streamfair/streamfair_token_svc/util"
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
