@@ -47,7 +47,7 @@ service TokenService {
 	// Tokens
 	rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse) {
 		option (google.api.http) = {
-			post: "/v1/create_token"
+			post: "/api/streamfair/token/create_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -58,7 +58,7 @@ service TokenService {
 
 	rpc GetTokenById(GetTokenByIdRequest) returns (GetTokenByIdResponse) {
 		option (google.api.http) = {
-			post: "/v1/get_token_by_id"
+			post: "/api/streamfair/token/get_token_by_id"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -69,7 +69,7 @@ service TokenService {
 	
 	rpc GetTokenByValue(GetTokenByValueRequest) returns (GetTokenByValueResponse) {
 		option (google.api.http) = {
-			post: "/v1/get_token_by_value"
+			post: "/api/streamfair/token/get_token_by_value"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -80,7 +80,7 @@ service TokenService {
 
 	rpc RevokeTokenByValue(RevokeTokenByValueRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/revoke_token_by_value"
+			post: "/api/streamfair/token/revoke_token_by_value"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -91,7 +91,7 @@ service TokenService {
 
 	rpc RevokeTokenById(RevokeTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/revoke_token_by_id"
+			post: "/api/streamfair/token/revoke_token_by_id"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -102,7 +102,7 @@ service TokenService {
 
 	rpc DeleteTokenById(DeleteTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/delete_token_by_id"
+			post: "/api/streamfair/token/delete_token_by_id"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -113,7 +113,7 @@ service TokenService {
 	
 	rpc DeleteTokenByValue(DeleteTokenByValueRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/delete_token_by_value"
+			post: "/api/streamfair/token/delete_token_by_value"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -124,7 +124,7 @@ service TokenService {
 	
 	rpc ListRevokedTokens(ListRevokedTokensRequest) returns (ListRevokedTokensResponse) {
 		option (google.api.http) = {
-			post: "/v1/list_revoked_tokens"
+			post: "/api/streamfair/token/list_revoked_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "List all revoked tokens.",
@@ -134,7 +134,7 @@ service TokenService {
 
 	rpc ListTokens(ListTokensRequest) returns (ListTokensResponse) {
 		option (google.api.http) = {
-			get: "/v1/list_tokens"
+			post: "/api/streamfair/token/list_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "List all tokens.",
@@ -144,7 +144,7 @@ service TokenService {
 
 	rpc UpdateToken(UpdateTokenRequest) returns (UpdateTokenResponse) {
 		option (google.api.http) = {
-			patch: "/v1/update_token"
+			patch: "/api/streamfair/token/update_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -155,7 +155,7 @@ service TokenService {
 
 	rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {
 		option (google.api.http) = {
-			post: "/v1/verify_token"
+			post: "/api/streamfair/token/verify_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -168,7 +168,7 @@ service TokenService {
 
 	rpc BlacklistRefreshToken(BlacklistRefreshTokenRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/blacklist_refresh_token"
+			post: "/api/streamfair/token/blacklist_refresh_token"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Blacklist a refresh token.",
@@ -178,7 +178,7 @@ service TokenService {
 
 	rpc CreateRefreshToken(CreateRefreshTokenRequest) returns (CreateRefreshTokenResponse) {
 		option (google.api.http) = {
-			post: "/v1/create_refresh_token"
+			post: "/api/streamfair/token/create_refresh_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -189,7 +189,7 @@ service TokenService {
 
 	rpc DeleteRefreshToken(DeleteRefreshTokenRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			delete: "/v1/delete_refresh_token/{id}"
+			delete: "/api/streamfair/token/delete_refresh_token/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Delete a refresh token by its ID.",
@@ -199,7 +199,7 @@ service TokenService {
 
 	rpc GetRefreshTokenByID(GetRefreshTokenByIDRequest) returns (GetRefreshTokenByIDResponse) {
 		option (google.api.http) = {
-			get: "/v1/get_refresh_token_by_id/{id}"
+			get: "/api/streamfair/token/get_refresh_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a refresh token by its ID.",
@@ -209,7 +209,7 @@ service TokenService {
 
 	rpc GetRefreshTokenByValue(GetRefreshTokenByValueRequest) returns (GetRefreshTokenByValueResponse) {
 		option (google.api.http) = {
-			get: "/v1/get_refresh_token_by_value/{refresh_token}"
+			get: "/api/streamfair/token/get_refresh_token_by_value/{refresh_token}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a refresh token by its value.",
@@ -219,7 +219,7 @@ service TokenService {
 
 	rpc GetRevokedRefreshTokens(GetRevokedRefreshTokensRequest) returns (GetRevokedRefreshTokensResponse) {
 		option (google.api.http) = {
-			get: "/v1/get_revoked_refresh_tokens"
+			get: "/api/streamfair/token/get_revoked_refresh_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get all revoked refresh tokens.",
@@ -229,7 +229,7 @@ service TokenService {
 
 	rpc ListRefreshTokens(ListRefreshTokensRequest) returns (ListRefreshTokensResponse) {
 		option (google.api.http) = {
-			get: "/v1/list_refresh_tokens"
+			get: "/api/streamfair/token/list_refresh_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "List all refresh tokens.",
@@ -239,7 +239,7 @@ service TokenService {
 
 	rpc RevokeRefreshToken(RevokeRefreshTokenRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/v1/revoke_refresh_token"
+			post: "/api/streamfair/token/revoke_refresh_token"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Revoke a refresh token.",
@@ -249,7 +249,7 @@ service TokenService {
 
 	rpc UpdateRefreshToken(UpdateRefreshTokenRequest) returns (UpdateRefreshTokenResponse) {
 		option (google.api.http) = {
-			patch: "/v1/update_refresh_token"
+			patch: "/api/streamfair/token/update_refresh_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -260,7 +260,7 @@ service TokenService {
 
 	rpc VerifyRefreshToken(VerifyRefreshTokenRequest) returns (VerifyRefreshTokenResponse) {
 		option (google.api.http) = {
-			post: "/v1/verify_refresh_token"
+			post: "/api/streamfair/token/verify_refresh_token"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {

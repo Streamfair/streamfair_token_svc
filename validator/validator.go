@@ -29,6 +29,17 @@ func ValidateDuration(durationStr string) error {
 	return nil
 }
 
+// ValidateDuration checks if the given string can be parsed as a duration
+// Placeholder for later validation
+// TODO: Implement this function when needed
+func ValidateTokenType(tokenType string) error {
+	fmt.Printf("Token Type: %s\n", tokenType)
+	if tokenType != "access" {
+		return fmt.Errorf("invalid token type")
+	}
+	return nil
+}
+
 // Function to validate offset parameters
 func ValidateLimit(limit int32) error {
 	// Define a reasonable range for limit (e.g.,  1-100)

@@ -20,9 +20,10 @@ SELECT * FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2;
 -- name: UpdateToken :one
 UPDATE "token_svc"."Tokens" 
 SET
-    user_id = COALESCE($2, user_id),
+    user_id = COALESCE(sqlc.narg(user_id), user_id),
+    token_type = COALESCE(sqlc.narg(token_type), token_type),
     updated_at = now()
-WHERE id = $1 RETURNING *;
+WHERE id = sqlc.arg(id) RETURNING *;
 
 -- name: VerifyToken :one
 SELECT * FROM "token_svc"."Tokens" WHERE token = $1

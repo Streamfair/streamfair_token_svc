@@ -208,18 +208,20 @@ func (q *Queries) RevokeTokenByValue(ctx context.Context, token string) error {
 const updateToken = `-- name: UpdateToken :one
 UPDATE "token_svc"."Tokens" 
 SET
-    user_id = COALESCE($2, user_id),
+    user_id = COALESCE($1, user_id),
+    token_type = COALESCE($2, token_type),
     updated_at = now()
-WHERE id = $1 RETURNING id, user_id, token_type, token, revoked, expires_at, created_at, updated_at
+WHERE id = $3 RETURNING id, user_id, token_type, token, revoked, expires_at, created_at, updated_at
 `
 
 type UpdateTokenParams struct {
-	ID     int64 `json:"id"`
-	UserID int64 `json:"user_id"`
+	UserID    pgtype.Int8 `json:"user_id"`
+	TokenType pgtype.Text `json:"token_type"`
+	ID        int64       `json:"id"`
 }
 
 func (q *Queries) UpdateToken(ctx context.Context, arg UpdateTokenParams) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, updateToken, arg.ID, arg.UserID)
+	row := q.db.QueryRow(ctx, updateToken, arg.UserID, arg.TokenType, arg.ID)
 	var i TokenSvcToken
 	err := row.Scan(
 		&i.ID,

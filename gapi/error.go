@@ -103,6 +103,8 @@ func handleDatabaseError(err error) error {
 
 		var statusCode codes.Code
 		switch pgErr.Code {
+		case "22001": // string_data_right_truncation
+			statusCode = codes.InvalidArgument
 		case "23505": // unique_violation
 			statusCode = codes.AlreadyExists
 		case "23503": // foreign_key_violation

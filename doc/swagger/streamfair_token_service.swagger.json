@@ -21,7 +21,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/create_token": {
+    "/api/streamfair/token/create_token": {
       "post": {
         "summary": "Create Token",
         "description": "Create a new token.",
@@ -55,7 +55,7 @@
         ]
       }
     },
-    "/v1/get_token_by_id": {
+    "/api/streamfair/token/get_token_by_id": {
       "post": {
         "summary": "Get Token by ID",
         "description": "Get a token by its ID.",
@@ -89,7 +89,7 @@
         ]
       }
     },
-    "/v1/get_token_by_value": {
+    "/api/streamfair/token/get_token_by_value": {
       "post": {
         "summary": "Get Token by Value",
         "description": "Get a token by its value.",
@@ -123,7 +123,7 @@
         ]
       }
     },
-    "/v1/revoke_token_by_value": {
+    "/api/streamfair/token/revoke_token_by_value": {
       "post": {
         "summary": "Revoke Token by Value",
         "description": "Revoke a token by its value.",
@@ -158,7 +158,7 @@
         ]
       }
     },
-    "/v1/revoke_token_by_id": {
+    "/api/streamfair/token/revoke_token_by_id": {
       "post": {
         "summary": "Revoke Token by ID",
         "description": "Revoke a token by its ID.",
@@ -193,7 +193,7 @@
         ]
       }
     },
-    "/v1/delete_token_by_id": {
+    "/api/streamfair/token/delete_token_by_id": {
       "post": {
         "summary": "Delete Token by ID",
         "description": "Delete a token by its ID.",
@@ -228,7 +228,7 @@
         ]
       }
     },
-    "/v1/delete_token_by_value": {
+    "/api/streamfair/token/delete_token_by_value": {
       "post": {
         "summary": "Delete Token by Value",
         "description": "Delete a token by its value.",
@@ -263,7 +263,7 @@
         ]
       }
     },
-    "/v1/list_revoked_tokens": {
+    "/api/streamfair/token/list_revoked_tokens": {
       "post": {
         "summary": "List Revoked Tokens",
         "description": "List all revoked tokens.",
@@ -303,8 +303,8 @@
         ]
       }
     },
-    "/v1/list_tokens": {
-      "get": {
+    "/api/streamfair/token/list_tokens": {
+      "post": {
         "summary": "List Tokens",
         "description": "List all tokens.",
         "operationId": "TokenService_ListTokens",
@@ -343,7 +343,7 @@
         ]
       }
     },
-    "/v1/update_token": {
+    "/api/streamfair/token/update_token": {
       "patch": {
         "summary": "Update Token",
         "description": "Update a token.",
@@ -377,7 +377,7 @@
         ]
       }
     },
-    "/v1/verify_token": {
+    "/api/streamfair/token/verify_token": {
       "post": {
         "summary": "Verify Token",
         "description": "Verify a token.",
@@ -411,7 +411,7 @@
         ]
       }
     },
-    "/v1/blacklist_refresh_token": {
+    "/api/streamfair/token/blacklist_refresh_token": {
       "post": {
         "summary": "Blacklist Refresh Token",
         "description": "Blacklist a refresh token.",
@@ -444,7 +444,7 @@
         ]
       }
     },
-    "/v1/create_refresh_token": {
+    "/api/streamfair/token/create_refresh_token": {
       "post": {
         "summary": "Create Refresh Token",
         "description": "Create a new refresh token.",
@@ -478,7 +478,7 @@
         ]
       }
     },
-    "/v1/delete_refresh_token/{id}": {
+    "/api/streamfair/token/delete_refresh_token/{id}": {
       "delete": {
         "summary": "Delete Refresh Token by ID",
         "description": "Delete a refresh token by its ID.",
@@ -512,7 +512,7 @@
         ]
       }
     },
-    "/v1/get_refresh_token_by_id/{id}": {
+    "/api/streamfair/token/get_refresh_token_by_id/{id}": {
       "get": {
         "summary": "Get Refresh Token by ID",
         "description": "Get a refresh token by its ID.",
@@ -545,7 +545,7 @@
         ]
       }
     },
-    "/v1/get_refresh_token_by_value/{refreshToken}": {
+    "/api/streamfair/token/get_refresh_token_by_value/{refreshToken}": {
       "get": {
         "summary": "Get Refresh Token by Value",
         "description": "Get a refresh token by its value.",
@@ -577,7 +577,7 @@
         ]
       }
     },
-    "/v1/get_revoked_refresh_tokens": {
+    "/api/streamfair/token/get_revoked_refresh_tokens": {
       "get": {
         "summary": "Get Revoked Refresh Tokens",
         "description": "Get all revoked refresh tokens.",
@@ -617,7 +617,7 @@
         ]
       }
     },
-    "/v1/list_refresh_tokens": {
+    "/api/streamfair/token/list_refresh_tokens": {
       "get": {
         "summary": "List Refresh Tokens",
         "description": "List all refresh tokens.",
@@ -657,7 +657,7 @@
         ]
       }
     },
-    "/v1/revoke_refresh_token": {
+    "/api/streamfair/token/revoke_refresh_token": {
       "post": {
         "summary": "Revoke Refresh Token",
         "description": "Revoke a refresh token.",
@@ -691,7 +691,7 @@
         ]
       }
     },
-    "/v1/update_refresh_token": {
+    "/api/streamfair/token/update_refresh_token": {
       "patch": {
         "summary": "Update Refresh Token",
         "description": "Update a refresh token.",
@@ -725,7 +725,7 @@
         ]
       }
     },
-    "/v1/verify_refresh_token": {
+    "/api/streamfair/token/verify_refresh_token": {
       "post": {
         "summary": "Verify Refresh Token",
         "description": "Verify a refresh token.",
@@ -1035,6 +1035,9 @@
         "userId": {
           "type": "string",
           "format": "int64"
+        },
+        "tokenType": {
+          "type": "string"
         }
       }
     },

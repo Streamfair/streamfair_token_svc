@@ -6,6 +6,7 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=streamfair_token_service_db
+    container_name: streamfair_token_service_db
     ports:
       - "5434:5432"
     networks:
@@ -15,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: streamfair_token_service
     ports:
       - "9390:9092"
       - "8380:8082"

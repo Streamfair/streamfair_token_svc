@@ -118,7 +118,7 @@ func (server *Server) RunGrpcGatewayServer() {
 	server.httpServer.Handler = handler
 
 	// Add a route for the health check service.
-	mux.HandleFunc("/v1/healthz", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/streamfair/token/healthz", func(w http.ResponseWriter, r *http.Request) {
 		resp, err := server.healthSrv.Check(context.Background(), &grpc_health_v1.HealthCheckRequest{})
 		if err != nil {
 			// Log the error for debugging purposes

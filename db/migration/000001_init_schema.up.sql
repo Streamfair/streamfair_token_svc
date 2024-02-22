@@ -4,7 +4,7 @@ CREATE TABLE "token_svc"."Tokens" (
   "id" BIGSERIAL PRIMARY KEY,
   "user_id" BIGINT NOT NULL,
   "token_type" VARCHAR(20) DEFAULT 'access',
-  "token" VARCHAR(255) NOT NULL,
+  "token" TEXT NOT NULL,
   "revoked" BOOLEAN NOT NULL DEFAULT false,
   "expires_at" TIMESTAMPTZ NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now()),
@@ -14,7 +14,7 @@ CREATE TABLE "token_svc"."Tokens" (
 CREATE TABLE "token_svc"."RefreshTokens" (
   "id" BIGSERIAL PRIMARY KEY,
   "user_id" BIGINT NOT NULL,
-  "token" VARCHAR(255) NOT NULL,
+  "token" TEXT NOT NULL,
   "revoked" BOOLEAN NOT NULL DEFAULT false,
   "expires_at" TIMESTAMPTZ NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT (now()),
