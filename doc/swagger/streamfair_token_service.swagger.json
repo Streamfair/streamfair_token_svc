@@ -479,7 +479,7 @@
       }
     },
     "/api/streamfair/token/delete_refresh_token/{id}": {
-      "delete": {
+      "post": {
         "summary": "Delete Refresh Token by ID",
         "description": "Delete a refresh token by its ID.",
         "operationId": "TokenService_DeleteRefreshToken",
@@ -513,7 +513,7 @@
       }
     },
     "/api/streamfair/token/get_refresh_token_by_id/{id}": {
-      "get": {
+      "post": {
         "summary": "Get Refresh Token by ID",
         "description": "Get a refresh token by its ID.",
         "operationId": "TokenService_GetRefreshTokenByID",
@@ -546,7 +546,7 @@
       }
     },
     "/api/streamfair/token/get_refresh_token_by_value/{refreshToken}": {
-      "get": {
+      "post": {
         "summary": "Get Refresh Token by Value",
         "description": "Get a refresh token by its value.",
         "operationId": "TokenService_GetRefreshTokenByValue",
@@ -578,7 +578,7 @@
       }
     },
     "/api/streamfair/token/get_revoked_refresh_tokens": {
-      "get": {
+      "post": {
         "summary": "Get Revoked Refresh Tokens",
         "description": "Get all revoked refresh tokens.",
         "operationId": "TokenService_GetRevokedRefreshTokens",
@@ -618,7 +618,7 @@
       }
     },
     "/api/streamfair/token/list_refresh_tokens": {
-      "get": {
+      "post": {
         "summary": "List Refresh Tokens",
         "description": "List all refresh tokens.",
         "operationId": "TokenService_ListRefreshTokens",

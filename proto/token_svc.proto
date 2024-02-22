@@ -189,7 +189,7 @@ service TokenService {
 
 	rpc DeleteRefreshToken(DeleteRefreshTokenRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			delete: "/api/streamfair/token/delete_refresh_token/{id}"
+			post: "/api/streamfair/token/delete_refresh_token/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Delete a refresh token by its ID.",
@@ -199,7 +199,7 @@ service TokenService {
 
 	rpc GetRefreshTokenByID(GetRefreshTokenByIDRequest) returns (GetRefreshTokenByIDResponse) {
 		option (google.api.http) = {
-			get: "/api/streamfair/token/get_refresh_token_by_id/{id}"
+			post: "/api/streamfair/token/get_refresh_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a refresh token by its ID.",
@@ -209,7 +209,7 @@ service TokenService {
 
 	rpc GetRefreshTokenByValue(GetRefreshTokenByValueRequest) returns (GetRefreshTokenByValueResponse) {
 		option (google.api.http) = {
-			get: "/api/streamfair/token/get_refresh_token_by_value/{refresh_token}"
+			post: "/api/streamfair/token/get_refresh_token_by_value/{refresh_token}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a refresh token by its value.",
@@ -219,7 +219,7 @@ service TokenService {
 
 	rpc GetRevokedRefreshTokens(GetRevokedRefreshTokensRequest) returns (GetRevokedRefreshTokensResponse) {
 		option (google.api.http) = {
-			get: "/api/streamfair/token/get_revoked_refresh_tokens"
+			post: "/api/streamfair/token/get_revoked_refresh_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get all revoked refresh tokens.",
@@ -229,7 +229,7 @@ service TokenService {
 
 	rpc ListRefreshTokens(ListRefreshTokensRequest) returns (ListRefreshTokensResponse) {
 		option (google.api.http) = {
-			get: "/api/streamfair/token/list_refresh_tokens"
+			post: "/api/streamfair/token/list_refresh_tokens"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "List all refresh tokens.",
