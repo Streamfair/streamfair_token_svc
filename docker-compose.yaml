@@ -2,10 +2,9 @@ version: "3.9"
 services:
   db:
     image: postgres:16-alpine
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=streamfair_token_service_db
+    env_file:
+      - path: app.env
+        required: false
     container_name: streamfair_token_service_db
     ports:
       - "5434:5432"
@@ -17,13 +16,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: streamfair_token_service
-    environment:
-      - SERVER_NAME=streamfair_token_service
     ports:
       - "9390:9092"
       - "8380:8082"
     env_file:
-      - app.env
+      - path: app.env
+        required: false
     depends_on:
       - db
     networks:
