@@ -49,5 +49,11 @@ jobs:
       with:
         go-version: ^1.22
 
+    - name: Create SSL certificate files
+      run: |
+        echo "${{ secrets.CERT_PEM }}" > ./ssl/certs/api.streamfair.local.cert.pem
+        echo "${{ secrets.KEY_PEM }}" > ./ssl/certs/api.streamfair.local.key.pem
+        echo "${{ secrets.CA_CERT_PEM }}" > ./ssl/certs/ca-chain.cert.pem
+
     - name: Test
       run: make test
