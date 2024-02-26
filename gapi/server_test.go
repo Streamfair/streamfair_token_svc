@@ -91,6 +91,7 @@ func TestGRPCGatewayServer(t *testing.T) {
 		defer ctrl.Finish()
 		mockStore := mock_db.NewMockStore(ctrl)
 
+
 		server := newTestServer(t, mockStore)
 		defer server.Shutdown()
 		configPath, err := filepath.Abs("app.env")

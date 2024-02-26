@@ -44,7 +44,6 @@ func setupDBConnection() {
 }
 
 func TestMain(m *testing.M) {
-	os.Chdir("../../")
 	setupDBConnection()
 
 	defer testDB.Close()
