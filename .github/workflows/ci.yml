@@ -5,7 +5,7 @@ name: streamfair_token_service_ci
 
 defaults:
   run:
-    working-directory: ./
+    working-directory: /streamfair_token_svc
 
 on:
   push:
