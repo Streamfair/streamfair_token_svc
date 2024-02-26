@@ -26,6 +26,9 @@ jobs:
       TOKEN_SYMMETRIC_KEY: ${{ secrets.TOKEN_SYMMETRIC_KEY }}
       ACCESS_TOKEN_DURATION: ${{ secrets.ACCESS_TOKEN_DURATION }}
       REFRESH_TOKEN_DURATION: ${{ secrets.REFRESH_TOKEN_DURATION }}
+      CERT_PEM: ${{ secrets.CERT_PEM }}
+      KEY_PEM: ${{ secrets.KEY_PEM }}
+      CA_CERT_PEM: ${{ secrets.CA_CERT_PEM }}
     services:
       postgres:
         image: postgres:16
