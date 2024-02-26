@@ -1,60 +1,25 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: streamfair_token_service_ci
-
-defaults:
-  run:
-    working-directory: ./
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: ["main"]
-
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
-    env:
-      DB_SOURCE_TOKEN_SERVICE: ${{ secrets.DB_SOURCE_TOKEN_SERVICE }}
-      MIGRATION_URL: ${{ secrets.MIGRATION_URL }}
-      HTTP_SERVER_ADDRESS_TOKEN_SERVICE: ${{ secrets.HTTP_SERVER_ADDRESS_TOKEN_SERVICE }}
-      GRPC_SERVER_ADDRESS_TOKEN_SERVICE: ${{ secrets.GRPC_SERVER_ADDRESS_TOKEN_SERVICE }}
-      TOKEN_SYMMETRIC_KEY: ${{ secrets.TOKEN_SYMMETRIC_KEY }}
-      ACCESS_TOKEN_DURATION: ${{ secrets.ACCESS_TOKEN_DURATION }}
-      REFRESH_TOKEN_DURATION: ${{ secrets.REFRESH_TOKEN_DURATION }}
-      CERT_PEM: ${{ secrets.CERT_PEM }}
-      KEY_PEM: ${{ secrets.KEY_PEM }}
-      CA_CERT_PEM: ${{ secrets.CA_CERT_PEM }}
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: streamfair_token_service_db
-        ports:
-        - 5434:5432
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    timeout-minutes:  10
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: ^1.22
+      - name: Run Docker Compose
+        run: |
+          docker-compose up --build --abort-on-container-exit
 
-    - name: List SSL directory contents
-      run: |
-        ls -la
-        ls -la ./ssl/certs
-        ls -la ./ssl/keys
-        ls -la ./ssl/ca-certs
-
-    - name: Test
-      run: make test
+      - name: Stop Docker Compose
+        run: |
+          docker-compose down
