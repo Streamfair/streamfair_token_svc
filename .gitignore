@@ -34,3 +34,6 @@ app.env
 
 # output
 coverage.out
+
+# openssl
+ssl

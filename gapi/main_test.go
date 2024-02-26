@@ -2,6 +2,7 @@ package gapi
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
@@ -10,7 +11,13 @@ import (
 )
 
 func newTestServer(t *testing.T, store db.Store) *Server {
-	config, err := util.LoadConfig("../.")
+	configPath, err := filepath.Abs("app.env")
+	require.NoError(t, err)
+
+	tlsPath, err := filepath.Abs("ssl")
+	require.NoError(t, err)
+
+	config, err := util.LoadConfig(configPath, tlsPath)
 	require.NoError(t, err)
 
 	server, err := NewServer(config, store)
@@ -20,5 +27,6 @@ func newTestServer(t *testing.T, store db.Store) *Server {
 }
 
 func TestMain(m *testing.M) {
+	os.Chdir("../")
 	os.Exit(m.Run())
 }

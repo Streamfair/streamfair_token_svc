@@ -17,6 +17,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: streamfair_token_service
+    environment:
+      - SERVER_NAME=streamfair_token_service
     ports:
       - "9390:9092"
       - "8380:8082"

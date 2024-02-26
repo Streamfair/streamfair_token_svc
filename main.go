@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"path/filepath"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
 	"github.com/Streamfair/streamfair_token_svc/gapi"
@@ -16,8 +17,16 @@ import (
 
 func main() {
 	fmt.Println("Hello, Streamfair Token Management Service!")
+	configPath, err := filepath.Abs("app.env")
+	if err != nil {
+		log.Printf("config: error while getting absolute path: %v\n", err)
+	}
+	tlsPath, err := filepath.Abs("ssl")
+	if err != nil {
+		log.Printf("config: error while getting absolute path: %v\n", err)
+	}
 
-	config, err := util.LoadConfig(".")
+	config, err := util.LoadConfig(configPath, tlsPath)
 	if err != nil {
 		log.Printf("config: error while loading config: %v\n", err)
 	}

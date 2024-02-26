@@ -731,7 +731,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/CreateToken", runtime.WithHTTPPathPattern("/api/streamfair/token/create_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/CreateToken", runtime.WithHTTPPathPattern("/streamfair/v1/create_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -756,7 +756,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/get_token_by_id"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/get_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -781,7 +781,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/get_token_by_value"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/get_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -806,7 +806,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_token_by_value"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -831,7 +831,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_token_by_id"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -856,7 +856,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_token_by_id"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/delete_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -881,7 +881,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_token_by_value"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/delete_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -906,7 +906,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListRevokedTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_revoked_tokens"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListRevokedTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_revoked_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -931,7 +931,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_tokens"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -956,7 +956,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/UpdateToken", runtime.WithHTTPPathPattern("/api/streamfair/token/update_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/UpdateToken", runtime.WithHTTPPathPattern("/streamfair/v1/update_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -981,7 +981,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/VerifyToken", runtime.WithHTTPPathPattern("/api/streamfair/token/verify_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/VerifyToken", runtime.WithHTTPPathPattern("/streamfair/v1/verify_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1006,7 +1006,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/BlacklistRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/blacklist_refresh_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/BlacklistRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/blacklist_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1031,7 +1031,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/CreateRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/create_refresh_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/CreateRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/create_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1056,7 +1056,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_refresh_token/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/DeleteRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/delete_refresh_token/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1081,7 +1081,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByID", runtime.WithHTTPPathPattern("/api/streamfair/token/get_refresh_token_by_id/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByID", runtime.WithHTTPPathPattern("/streamfair/v1/get_refresh_token_by_id/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1106,7 +1106,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/get_refresh_token_by_value/{refresh_token}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/get_refresh_token_by_value/{refresh_token}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1131,7 +1131,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRevokedRefreshTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/get_revoked_refresh_tokens"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/GetRevokedRefreshTokens", runtime.WithHTTPPathPattern("/streamfair/v1/get_revoked_refresh_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1156,7 +1156,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListRefreshTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_refresh_tokens"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/ListRefreshTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_refresh_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1181,7 +1181,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_refresh_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/RevokeRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1206,7 +1206,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/UpdateRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/update_refresh_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/UpdateRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/update_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1231,7 +1231,7 @@ func RegisterTokenServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/VerifyRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/verify_refresh_token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.TokenService/VerifyRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/verify_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1295,7 +1295,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/CreateToken", runtime.WithHTTPPathPattern("/api/streamfair/token/create_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/CreateToken", runtime.WithHTTPPathPattern("/streamfair/v1/create_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1317,7 +1317,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/get_token_by_id"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/get_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1339,7 +1339,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/get_token_by_value"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/get_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1361,7 +1361,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_token_by_value"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1383,7 +1383,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_token_by_id"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1405,7 +1405,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteTokenById", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_token_by_id"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteTokenById", runtime.WithHTTPPathPattern("/streamfair/v1/delete_token_by_id"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1427,7 +1427,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_token_by_value"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/delete_token_by_value"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1449,7 +1449,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListRevokedTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_revoked_tokens"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListRevokedTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_revoked_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1471,7 +1471,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_tokens"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1493,7 +1493,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/UpdateToken", runtime.WithHTTPPathPattern("/api/streamfair/token/update_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/UpdateToken", runtime.WithHTTPPathPattern("/streamfair/v1/update_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1515,7 +1515,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/VerifyToken", runtime.WithHTTPPathPattern("/api/streamfair/token/verify_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/VerifyToken", runtime.WithHTTPPathPattern("/streamfair/v1/verify_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1537,7 +1537,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/BlacklistRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/blacklist_refresh_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/BlacklistRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/blacklist_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1559,7 +1559,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/CreateRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/create_refresh_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/CreateRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/create_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1581,7 +1581,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/delete_refresh_token/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/DeleteRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/delete_refresh_token/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1603,7 +1603,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByID", runtime.WithHTTPPathPattern("/api/streamfair/token/get_refresh_token_by_id/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByID", runtime.WithHTTPPathPattern("/streamfair/v1/get_refresh_token_by_id/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1625,7 +1625,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByValue", runtime.WithHTTPPathPattern("/api/streamfair/token/get_refresh_token_by_value/{refresh_token}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRefreshTokenByValue", runtime.WithHTTPPathPattern("/streamfair/v1/get_refresh_token_by_value/{refresh_token}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1647,7 +1647,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRevokedRefreshTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/get_revoked_refresh_tokens"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/GetRevokedRefreshTokens", runtime.WithHTTPPathPattern("/streamfair/v1/get_revoked_refresh_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1669,7 +1669,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListRefreshTokens", runtime.WithHTTPPathPattern("/api/streamfair/token/list_refresh_tokens"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/ListRefreshTokens", runtime.WithHTTPPathPattern("/streamfair/v1/list_refresh_tokens"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1691,7 +1691,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/revoke_refresh_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/RevokeRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/revoke_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1713,7 +1713,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/UpdateRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/update_refresh_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/UpdateRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/update_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1735,7 +1735,7 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/VerifyRefreshToken", runtime.WithHTTPPathPattern("/api/streamfair/token/verify_refresh_token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.TokenService/VerifyRefreshToken", runtime.WithHTTPPathPattern("/streamfair/v1/verify_refresh_token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1755,47 +1755,47 @@ func RegisterTokenServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_TokenService_CreateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "create_token"}, ""))
+	pattern_TokenService_CreateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "create_token"}, ""))
 
-	pattern_TokenService_GetTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "get_token_by_id"}, ""))
+	pattern_TokenService_GetTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "get_token_by_id"}, ""))
 
-	pattern_TokenService_GetTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "get_token_by_value"}, ""))
+	pattern_TokenService_GetTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "get_token_by_value"}, ""))
 
-	pattern_TokenService_RevokeTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "revoke_token_by_value"}, ""))
+	pattern_TokenService_RevokeTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "revoke_token_by_value"}, ""))
 
-	pattern_TokenService_RevokeTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "revoke_token_by_id"}, ""))
+	pattern_TokenService_RevokeTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "revoke_token_by_id"}, ""))
 
-	pattern_TokenService_DeleteTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "delete_token_by_id"}, ""))
+	pattern_TokenService_DeleteTokenById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "delete_token_by_id"}, ""))
 
-	pattern_TokenService_DeleteTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "delete_token_by_value"}, ""))
+	pattern_TokenService_DeleteTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "delete_token_by_value"}, ""))
 
-	pattern_TokenService_ListRevokedTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "list_revoked_tokens"}, ""))
+	pattern_TokenService_ListRevokedTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "list_revoked_tokens"}, ""))
 
-	pattern_TokenService_ListTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "list_tokens"}, ""))
+	pattern_TokenService_ListTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "list_tokens"}, ""))
 
-	pattern_TokenService_UpdateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "update_token"}, ""))
+	pattern_TokenService_UpdateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "update_token"}, ""))
 
-	pattern_TokenService_VerifyToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "verify_token"}, ""))
+	pattern_TokenService_VerifyToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "verify_token"}, ""))
 
-	pattern_TokenService_BlacklistRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "blacklist_refresh_token"}, ""))
+	pattern_TokenService_BlacklistRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "blacklist_refresh_token"}, ""))
 
-	pattern_TokenService_CreateRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "create_refresh_token"}, ""))
+	pattern_TokenService_CreateRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "create_refresh_token"}, ""))
 
-	pattern_TokenService_DeleteRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "streamfair", "token", "delete_refresh_token", "id"}, ""))
+	pattern_TokenService_DeleteRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"streamfair", "v1", "delete_refresh_token", "id"}, ""))
 
-	pattern_TokenService_GetRefreshTokenByID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "streamfair", "token", "get_refresh_token_by_id", "id"}, ""))
+	pattern_TokenService_GetRefreshTokenByID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"streamfair", "v1", "get_refresh_token_by_id", "id"}, ""))
 
-	pattern_TokenService_GetRefreshTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "streamfair", "token", "get_refresh_token_by_value", "refresh_token"}, ""))
+	pattern_TokenService_GetRefreshTokenByValue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"streamfair", "v1", "get_refresh_token_by_value", "refresh_token"}, ""))
 
-	pattern_TokenService_GetRevokedRefreshTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "get_revoked_refresh_tokens"}, ""))
+	pattern_TokenService_GetRevokedRefreshTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "get_revoked_refresh_tokens"}, ""))
 
-	pattern_TokenService_ListRefreshTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "list_refresh_tokens"}, ""))
+	pattern_TokenService_ListRefreshTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "list_refresh_tokens"}, ""))
 
-	pattern_TokenService_RevokeRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "revoke_refresh_token"}, ""))
+	pattern_TokenService_RevokeRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "revoke_refresh_token"}, ""))
 
-	pattern_TokenService_UpdateRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "update_refresh_token"}, ""))
+	pattern_TokenService_UpdateRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "update_refresh_token"}, ""))
 
-	pattern_TokenService_VerifyRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "streamfair", "token", "verify_refresh_token"}, ""))
+	pattern_TokenService_VerifyRefreshToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"streamfair", "v1", "verify_refresh_token"}, ""))
 )
 
 var (
