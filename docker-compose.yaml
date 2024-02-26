@@ -4,7 +4,7 @@ services:
     image: postgres:16-alpine
     env_file:
       - path: app.env
-        required: false
+        required: "false"
     container_name: streamfair_token_service_db
     ports:
       - "5434:5432"
@@ -21,7 +21,7 @@ services:
       - "8380:8082"
     env_file:
       - path: app.env
-        required: false
+        required: "false"
     depends_on:
       - db
     networks:
