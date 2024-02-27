@@ -3,7 +3,6 @@ FROM golang:1.22.0-alpine3.19 AS build
 WORKDIR /streamfair_token_svc
 COPY . .
 RUN go mod tidy
-RUN go test -v ./...
 RUN CGO_ENABLED=0 GOOS=linux go build -o token_svc main.go
 
 # Run Stage

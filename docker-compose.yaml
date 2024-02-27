@@ -10,6 +10,12 @@ services:
       - "5434:5432"
     networks:
       - db_access_network
+    healthcheck:
+      test:         [ "CMD", "/usr/local/bin/pg_isready" ]
+      start_period:  1s
+      interval:     1s
+      timeout:      1s
+      retries:      30
 
   api:
     build:
@@ -23,7 +29,8 @@ services:
       - path: ./app.env
         required: false
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - streamfair_internal_network
       - db_access_network
@@ -34,4 +41,4 @@ networks:
   db_access_network:
     driver: bridge
   streamfair_internal_network:
-    driver: bridge
+    external: true
