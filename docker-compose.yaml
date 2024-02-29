@@ -4,10 +4,10 @@ services:
     image: postgres:16-alpine
     container_name: streamfair_token_service_db
     environment:
-      CONTAINER_ENV: "true"
+      CONTAINER_ENV: true
     env_file:
       - path: ./app.env
-        required: "false"
+        required: false
     ports:
       - "5434:5432"
     networks:
@@ -25,10 +25,10 @@ services:
       dockerfile: Dockerfile
     container_name: streamfair_token_service
     environment:
-      CONTAINER_ENV: "true"
+      CONTAINER_ENV: true
     env_file:
       - path: ./app.env
-        required: "false"
+        required: false
     ports:
       - "9390:9092"
       - "8380:8082"

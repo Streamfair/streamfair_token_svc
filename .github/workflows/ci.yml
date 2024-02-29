@@ -39,6 +39,9 @@ jobs:
         run: |
           go test -v ./...
 
+      - name: Check Docker Compose version
+        run: docker compose version
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       
