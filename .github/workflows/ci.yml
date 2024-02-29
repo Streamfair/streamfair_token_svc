@@ -22,9 +22,6 @@ jobs:
       CERT_PEM: ${{ secrets.CERT_PEM }}
       KEY_PEM: ${{ secrets.KEY_PEM }}
       CA_CERT_PEM: ${{ secrets.CA_CERT_PEM }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       CI_ENV: ${{ secrets.CI_ENV }}
     steps:
       - name: Checkout code
@@ -49,6 +46,10 @@ jobs:
       - name: Run Docker Compose
         run: |
           docker compose -f docker-compose.ci.yaml up --build --abort-on-container-exit
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
       - name: Stop Docker Compose
         run: |
