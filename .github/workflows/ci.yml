@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes:   10
     env:
-      DB_SOURCE_TOKEN_SERVICE: ${{ secrets.DB_SOURCE_TOKEN_SERVICE }}
+      DB_SOURCE_TOKEN_SERVICE_LOCAL: ${{ secrets.DB_SOURCE_TOKEN_SERVICE_LOCAL }}
       MIGRATION_URL: ${{ secrets.MIGRATION_URL }}
       HTTP_SERVER_ADDRESS_TOKEN_SERVICE: ${{ secrets.HTTP_SERVER_ADDRESS_TOKEN_SERVICE }}
       GRPC_SERVER_ADDRESS_TOKEN_SERVICE: ${{ secrets.GRPC_SERVER_ADDRESS_TOKEN_SERVICE }}
@@ -33,11 +33,6 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version:  1.22.0
-
-      - name: Check ssl directory
-        run: |
-          find . -type f -name "*" | grep ssl
-          find ./ssl -type f -name "*"
 
       - name: Run unit tests
         run: |
