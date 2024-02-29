@@ -79,9 +79,11 @@ func LoadConfig() (config Config, err error) {
 		config.PostgresDb = postgresDb
 	}
 	// If environment variables are not set, attempt to load from the config file
-	if config.DBSource == "" || config.HttpServerAddress == "" || config.GrpcServerAddress == "" ||
-		config.CertPem == "" || config.KeyPem == "" || config.CaCertPem == "" {
-		// Load configuration from the .env file
+	if (config.DBSource == "" || config.DBSourceLocal == ""  || config.HttpServerAddress == "" ||
+		config.GrpcServerAddress == "" || config.CertPem == "" || config.KeyPem == "" || config.CaCertPem == "") &&
+		viper.GetString("CI_ENV") != "true" && viper.GetString("CONTAINER_ENV") != "true" {
+
+		// Load configuration from the app.env file
 		viper.SetConfigFile("app.env")
 		if err := viper.ReadInConfig(); err != nil {
 			return config, err

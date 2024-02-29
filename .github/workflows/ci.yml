@@ -48,3 +48,4 @@ jobs:
       - name: Stop Docker Compose
         run: |
           docker-compose down
+          docker system prune -a -f
