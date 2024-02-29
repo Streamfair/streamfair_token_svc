@@ -1,7 +1,6 @@
 package util
 
 import (
-	"path/filepath"
 	"time"
 
 	"github.com/spf13/viper"
@@ -12,6 +11,7 @@ import (
 type Config struct {
 	ServerName           string        `mapstructure:"SERVER_NAME"`
 	DBSource             string        `mapstructure:"DB_SOURCE_TOKEN_SERVICE"`
+	DBSourceLocal        string        `mapstructure:"DB_SOURCE_TOKEN_SERVICE_LOCAL"`
 	MigrationURL         string        `mapstructure:"MIGRATION_URL"`
 	HttpServerAddress    string        `mapstructure:"HTTP_SERVER_ADDRESS_TOKEN_SERVICE"`
 	GrpcServerAddress    string        `mapstructure:"GRPC_SERVER_ADDRESS_TOKEN_SERVICE"`
@@ -27,7 +27,7 @@ type Config struct {
 }
 
 // LoadConfig loads the configuration from the given path.
-func LoadConfig(path string, baseDir string) (config Config, err error) {
+func LoadConfig() (config Config, err error) {
 	// AutomaticEnv makes Viper check if environment variables match any of the existing keys.
 	// If matching env vars are found, they are loaded into Viper.
 	viper.AutomaticEnv()
@@ -38,6 +38,9 @@ func LoadConfig(path string, baseDir string) (config Config, err error) {
 	}
 	if dbSource := viper.GetString("DB_SOURCE_TOKEN_SERVICE"); dbSource != "" {
 		config.DBSource = dbSource
+	}
+	if dbSourceLocal := viper.GetString("DB_SOURCE_TOKEN_SERVICE_LOCAL"); dbSourceLocal != "" {
+		config.DBSourceLocal = dbSourceLocal
 	}
 	if migrationURL := viper.GetString("MIGRATION_URL"); migrationURL != "" {
 		config.MigrationURL = migrationURL
@@ -58,13 +61,13 @@ func LoadConfig(path string, baseDir string) (config Config, err error) {
 		config.RefreshTokenDuration = refreshTokenDuration
 	}
 	if certPem := viper.GetString("CERT_PEM"); certPem != "" {
-		config.CertPem = filepath.Join(baseDir+"/certs/", certPem)
+		config.CertPem = certPem
 	}
 	if keyPem := viper.GetString("KEY_PEM"); keyPem != "" {
-		config.KeyPem = filepath.Join(baseDir+"/private/", keyPem)
+		config.KeyPem = keyPem
 	}
 	if caCertPem := viper.GetString("CA_CERT_PEM"); caCertPem != "" {
-		config.CaCertPem = filepath.Join(baseDir+"/certs/", caCertPem)
+		config.CaCertPem = caCertPem
 	}
 	if postgresUser := viper.GetString("POSTGRES_USER"); postgresUser != "" {
 		config.PostgresUser = postgresUser
@@ -79,7 +82,7 @@ func LoadConfig(path string, baseDir string) (config Config, err error) {
 	if config.DBSource == "" || config.HttpServerAddress == "" || config.GrpcServerAddress == "" ||
 		config.CertPem == "" || config.KeyPem == "" || config.CaCertPem == "" {
 		// Load configuration from the .env file
-		viper.SetConfigFile(path)
+		viper.SetConfigFile("app.env")
 		if err := viper.ReadInConfig(); err != nil {
 			return config, err
 		}
@@ -88,10 +91,6 @@ func LoadConfig(path string, baseDir string) (config Config, err error) {
 		if err := viper.Unmarshal(&config); err != nil {
 			return config, err
 		}
-
-		config.CertPem = filepath.Join(baseDir+"/certs/", config.CertPem)
-		config.KeyPem = filepath.Join(baseDir+"/private/", config.KeyPem)
-		config.CaCertPem = filepath.Join(baseDir+"/certs/", config.CaCertPem)
 
 		return config, nil
 	}

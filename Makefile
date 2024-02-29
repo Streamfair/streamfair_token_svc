@@ -1,8 +1,9 @@
 ###  VARIABLES  ###
 include app.env
+
 # Docker Network
-## ADJUST FOR EACH SERVICE ##
-DOCKER_NETWORK := db_access_network
+DB_NETWORK := db_access_network
+SERVICE_NETWORK := streamfair_internal_network
 
 # Service Container
 ## ADJUST FOR EACH SERVICE ##
@@ -18,7 +19,7 @@ GRPC_GATEWAY_HOST_PORT := 8380
 # Database Container
 ## ADJUST FOR EACH SERVICE ##
 DB_IMAGE := postgres:16-alpine
-DB_CONTAINER_NAME := db_token_service
+DB_CONTAINER_NAME := token_service_db
 
 DB_PORT := 5432
 DB_HOST_PORT := 5434
@@ -27,7 +28,7 @@ DB_NAME := $(shell grep POSTGRES_DB app.env | cut -d '=' -f2)
 DB_USER := $(shell grep POSTGRES_USER app.env | cut -d '=' -f2)
 DB_PASSWORD := $(shell grep POSTGRES_PASSWORD app.env | cut -d '=' -f2)
 DB_HOST := localhost
-DB_SOURCE_SERVICE := "postgresql://${DB_USER}:${DB_PASSWORD}@${DOCKER_NETWORK}:${DB_HOST_PORT}/${DB_NAME}?sslmode=disable"
+DB_SOURCE_SERVICE := "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_NETWORK}:${DB_HOST_PORT}/${DB_NAME}?sslmode=disable"
 DB_SOURCE_MIGRATION := "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_HOST_PORT}/${DB_NAME}?sslmode=disable"
 
 # Migrate
@@ -67,15 +68,30 @@ MOCK_DEST := db/mock/store_mock.go
 SWAGGER_DIR := doc/swagger
 SWAGGER_DOC_NAME := streamfair_token_service
 
-###  TARGETS  ###
-# DB Management
-network:
-	docker network create ${DOCKER_NETWORK}
 
-db_container:
-	docker run --name ${DB_CONTAINER_NAME} --network ${DOCKER_NETWORK} -p ${DB_HOST_PORT}:${DB_PORT} -e POSTGRES_USER=${DB_USER} -e POSTGRES_PASSWORD=${DB_PASSWORD} -d ${DB_IMAGE}
+###  TARGETS  ###
+# Network Management
+network:
+	@docker network inspect ${DB_NETWORK} >/dev/null 2>&1 || \
+	docker network create --driver bridge ${DB_NETWORK}
+	@docker network inspect ${SERVICE_NETWORK} >/dev/null 2>&1 || \
+	docker network create --driver bridge ${SERVICE_NETWORK}
+
+# Service Management
+service_image:
+	docker build -t ${SERVICE_IMAGE}:${SERVICE_TAG} .
+
+service_container:
+	docker run --name ${SERVICE_IMAGE} --network ${DB_NETWORK} --network ${SERVICE_NETWORK} -p ${GRPC_GATEWAY_HOST_PORT}:${GRPC_GATEWAY_PORT} -p ${GRPC_HOST_PORT}:${GRPC_PORT} -e DB_SOURCE=${DB_SOURCE_SERVICE} ${SERVICE_IMAGE}:${SERVICE_TAG}
+
+# DB Management
+db_container: network
+	@docker start ${DB_CONTAINER_NAME} >/dev/null 2>&1 || \
+	docker run --name ${DB_CONTAINER_NAME} --network ${DB_NETWORK} -p ${DB_HOST_PORT}:${DB_PORT} -e POSTGRES_USER=${DB_USER} -e POSTGRES_PASSWORD=${DB_PASSWORD} -d ${DB_IMAGE}
 
 createdb:
+	@sleep 1
+	@docker exec -it ${DB_CONTAINER_NAME} psql -U ${DB_USER} -lqt | cut -d \| -f 1 | grep -qw ${DB_NAME} >/dev/null 2>&1 || \
 	docker exec -it ${DB_CONTAINER_NAME} createdb --username=${DB_USER} --owner=${DB_USER} ${DB_NAME}
 
 dropdb:
@@ -100,19 +116,16 @@ dbclean: migratedown migrateup
 	clear
 
 
-# Docker Management
-service_image:
-	docker build -t ${SERVICE_IMAGE}:${SERVICE_TAG} .
-	docker images
-
-service_container:
-	docker run --name ${SERVICE_IMAGE} --network ${DOCKER_NETWORK} -p ${GRPC_GATEWAY_HOST_PORT}:${GRPC_GATEWAY_PORT} -p ${GRPC_HOST_PORT}:${GRPC_PORT} -e DB_SOURCE=${DB_SOURCE_SERVICE} ${SERVICE_IMAGE}:${SERVICE_TAG}
-	docker ps
-
-
 # Execution
-server:
+server: network db_container createdb migrateup
 	@go run ${ENTRY_POINT}
+
+# Cleanup
+down:
+	docker stop ${DB_CONTAINER_NAME}
+	docker rm ${DB_CONTAINER_NAME}
+	docker stop ${SERVICE_IMAGE}
+	docker rm ${SERVICE_IMAGE}
 
 
 # SQLC Generation
@@ -211,4 +224,4 @@ clean:
 
 
 # PHONY Targets
-.PHONY: network db_container createdb dropdb createmigration migrateup migrateup1 migratedown migratedown1 dbclean service_image service_container server sqlc mock proto_core proto_token proto_rftoken clean_pb clean_token_dir clean_refresh_token_dir evans test dbtest apitest utiltest servertest coverage_html clean
+.PHONY: network db_container createdb dropdb createmigration migrateup migrateup1 migratedown migratedown1 dbclean service_image service_container server sqlc mock proto_core proto_token proto_rftoken clean_pb clean_token_dir clean_refresh_token_dir evans test dbtest apitest utiltest servertest coverage_html clean down vault_container vault_image

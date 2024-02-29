@@ -22,3 +22,12 @@ EXPOSE   9092
 
 CMD [ "/streamfair_token_svc/token_svc" ]
 ENTRYPOINT [ "/streamfair_token_svc/start.sh" ]
+
+RUN apk add --no-cache bash curl
+
+HEALTHCHECK \
+    --start-period=5s \
+    --interval=1s \
+    --timeout=1s \
+    --retries=30 \
+        CMD curl --fail -s  http://localhost:8082/streamfair/v1/healthz || exit 1

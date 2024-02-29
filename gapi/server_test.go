@@ -6,10 +6,8 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"testing"
 	"time"
 
@@ -91,20 +89,10 @@ func TestGRPCGatewayServer(t *testing.T) {
 		defer ctrl.Finish()
 		mockStore := mock_db.NewMockStore(ctrl)
 
-
 		server := newTestServer(t, mockStore)
 		defer server.Shutdown()
-		configPath, err := filepath.Abs("app.env")
-		if err != nil {
-			log.Printf("config: error while getting absolute path: %v\n", err)
-		}
 
-		tlsPath, err := filepath.Abs("ssl")
-		if err != nil {
-			log.Printf("config: error while getting absolute path: %v\n", err)
-		}
-
-		config, err := util.LoadConfig(configPath, tlsPath)
+		config, err := util.LoadConfig()
 		require.NoError(t, err)
 
 		// Start the gRPC server and the grpc gateway server in goroutines
@@ -116,7 +104,7 @@ func TestGRPCGatewayServer(t *testing.T) {
 		defer cancel()
 
 		// Wait for the server to become ready
-		if err := waitForHTTPServer(ctx, server.config); err != nil {
+		if err := waitForHTTPServer(server.config); err != nil {
 			t.Fatalf("failed to wait for server: %v", err)
 		}
 
@@ -154,7 +142,7 @@ func TestGRPCGatewayServer(t *testing.T) {
 	})
 }
 
-func waitForHTTPServer(ctx context.Context, config util.Config) error {
+func waitForHTTPServer(config util.Config) error {
 	maxAttempts := 10
 	attemptInterval := time.Second
 

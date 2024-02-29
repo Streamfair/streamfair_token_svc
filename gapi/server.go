@@ -17,6 +17,7 @@ import (
 	"github.com/Streamfair/streamfair_token_svc/util"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
+	"github.com/spf13/viper"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
@@ -129,31 +130,46 @@ func (server *Server) RunGrpcGatewayServer() {
 	}
 }
 
-// LoadTLSConfigWithTrustedCerts loads the TLS configuration from the specified paths,
-// using trusted certificates for verification.
+// LoadTLSConfigWithTrustedCerts loads the TLS configuration either from the specified paths
+// or using raw PEM data, depending on the CI_ENV environment variable.
 func LoadTLSConfigWithTrustedCerts(certPath, keyPath, caCertPath string) (*tls.Config, error) {
-    // Load the server's certificate and private key
-    cert, err := tls.LoadX509KeyPair(certPath, keyPath)
-    if err != nil {
-        return nil, fmt.Errorf("failed to load server certificates: %w", err)
-    }
+	var cert tls.Certificate
+	var err error
 
-    // Load the CA's certificate
-    caCertPEM, err := os.ReadFile(caCertPath)
-    if err != nil {
-        return nil, fmt.Errorf("failed to read CA certificate file: %w", err)
-    }
+	// Check if CI_ENV is set to true
+	if viper.GetString("CI_ENV") == "true" {
+		// Load the server's certificate and private key from raw PEM data
+		cert, err = tls.X509KeyPair([]byte(certPath), []byte(keyPath))
+	} else {
+		// Load the server's certificate and private key from paths
+		cert, err = tls.LoadX509KeyPair(certPath, keyPath)
+	}
+	if err != nil {
+		return nil, fmt.Errorf("failed to load server certificates: %w", err)
+	}
 
-    // Create a new certificate pool and add the CA's certificate
-    certPool := x509.NewCertPool()
-    if !certPool.AppendCertsFromPEM(caCertPEM) {
-        return nil, fmt.Errorf("failed to append CA certificate to pool")
-    }
+	var caCertPEM []byte
+	if viper.GetString("CI_ENV") == "true" {
+		// Use raw PEM data for the CA's certificate
+		caCertPEM = []byte(caCertPath)
+	} else {
+		// Load the CA's certificate from a path
+		caCertPEM, err = os.ReadFile(caCertPath)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read CA certificate file: %w", err)
+		}
+	}
 
-    return &tls.Config{
-        RootCAs:      certPool, // Use the CA's certificate pool
-        Certificates: []tls.Certificate{cert}, // Use the server's certificate and key
-    }, nil
+	// Create a new certificate pool and add the CA's certificate
+	certPool := x509.NewCertPool()
+	if !certPool.AppendCertsFromPEM(caCertPEM) {
+		return nil, fmt.Errorf("failed to append CA certificate to pool")
+	}
+
+	return &tls.Config{
+		RootCAs:      certPool,                // Use the CA's certificate pool
+		Certificates: []tls.Certificate{cert}, // Use the server's certificate and key
+	}, nil
 }
 
 // CreateHealthClient creates a gRPC health client to be used for health checks.

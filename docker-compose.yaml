@@ -2,10 +2,12 @@ version: "3.9"
 services:
   db:
     image: postgres:16-alpine
+    container_name: streamfair_token_service_db
+    environment:
+      CONTAINER_ENV: true
     env_file:
       - path: ./app.env
         required: false
-    container_name: streamfair_token_service_db
     ports:
       - "5434:5432"
     networks:
@@ -22,18 +24,20 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: streamfair_token_service
-    ports:
-      - "9390:9092"
-      - "8380:8082"
+    environment:
+      CONTAINER_ENV: true
     env_file:
       - path: ./app.env
         required: false
-    depends_on:
-      db:
-        condition: service_healthy
+    ports:
+      - "9390:9092"
+      - "8380:8082"
     networks:
       - streamfair_internal_network
       - db_access_network
+    depends_on:
+      db:
+        condition: service_healthy
     entrypoint: [ "/streamfair_token_svc/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/start.sh" ]
     command: [ "/streamfair_token_svc/token_svc" ]
 
@@ -41,4 +45,4 @@ networks:
   db_access_network:
     driver: bridge
   streamfair_internal_network:
-    external: true
+    driver: bridge
