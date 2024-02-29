@@ -52,5 +52,5 @@ jobs:
 
       - name: Stop Docker Compose
         run: |
-          docker compose down
+          docker compose -f docker-compose.ci.yaml down
           docker system prune -a -f
