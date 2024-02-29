@@ -15,7 +15,7 @@ COPY --from=build /streamfair_token_svc/token_svc .
 COPY start.sh .
 COPY wait-for.sh .
 COPY db/migration ./db/migration
-COPY ssl .
+COPY ssl ./ssl
 
 EXPOSE   8082
 EXPOSE   9092
