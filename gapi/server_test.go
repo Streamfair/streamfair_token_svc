@@ -13,6 +13,7 @@ import (
 
 	mock_db "github.com/Streamfair/streamfair_token_svc/db/mock"
 	"github.com/Streamfair/streamfair_token_svc/util"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/grpc"
@@ -143,15 +144,22 @@ func TestGRPCGatewayServer(t *testing.T) {
 }
 
 func waitForHTTPServer(config util.Config) error {
+	var caCert []byte
+	var err error
+	
 	maxAttempts := 10
 	attemptInterval := time.Second
 
-	// Load your CA certificate
-	caCert, err := os.ReadFile(config.CaCertPem)
-	if err != nil {
-		return fmt.Errorf("failed to load CA certificate: %w", err)
+	if viper.GetString("CI_ENV") != "true" {
+		// Load  CA certificate
+		caCert, err = os.ReadFile(config.CaCertPem)
+		if err != nil {
+			return fmt.Errorf("failed to load CA certificate: %w", err)
+		}
+	} else {
+		caCert = []byte(config.CaCertPem)
 	}
-
+		
 	// Create a new certificate pool and add the CA certificate
 	caCertPool := x509.NewCertPool()
 	if !caCertPool.AppendCertsFromPEM(caCert) {
