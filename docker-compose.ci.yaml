@@ -5,8 +5,8 @@ services:
     container_name: streamfair_token_service_db
     environment:
       CONTAINER_ENV: true
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB:       ${POSTGRES_DB}
+      POSTGRES_USER:     ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5434:5432"
@@ -14,7 +14,7 @@ services:
       - db_access_network
     healthcheck:
       test:         [ "CMD", "/usr/local/bin/pg_isready" ]
-      start_period:  1s
+      start_period: 1s
       interval:     1s
       timeout:      1s
       retries:      30
@@ -26,18 +26,18 @@ services:
     container_name: streamfair_token_service
     environment:
       CONTAINER_ENV: true
-      DB_SOURCE_TOKEN_SERVICE: ${DB_SOURCE_TOKEN_SERVICE}
-      MIGRATION_URL: ${MIGRATION_URL}
+      DB_SOURCE_TOKEN_SERVICE:           ${DB_SOURCE_TOKEN_SERVICE}
+      MIGRATION_URL:                     ${MIGRATION_URL}
       HTTP_SERVER_ADDRESS_TOKEN_SERVICE: ${HTTP_SERVER_ADDRESS_TOKEN_SERVICE}
       GRPC_SERVER_ADDRESS_TOKEN_SERVICE: ${GRPC_SERVER_ADDRESS_TOKEN_SERVICE}
-      TOKEN_SYMMETRIC_KEY: ${TOKEN_SYMMETRIC_KEY}
-      ACCESS_TOKEN_DURATION: ${ACCESS_TOKEN_DURATION}
-      REFRESH_TOKEN_DURATION: ${REFRESH_TOKEN_DURATION}
-      SERVER_NAME: ${SERVER_NAME}
-      CERT_PEM: ${CERT_PEM}
-      KEY_PEM: ${KEY_PEM}
-      CA_CERT_PEM: ${CA_CERT_PEM}
-      CI_ENV: ${CI_ENV}
+      TOKEN_SYMMETRIC_KEY:               ${TOKEN_SYMMETRIC_KEY}
+      ACCESS_TOKEN_DURATION:             ${ACCESS_TOKEN_DURATION}
+      REFRESH_TOKEN_DURATION:            ${REFRESH_TOKEN_DURATION}
+      SERVER_NAME:                       ${SERVER_NAME}
+      CERT_PEM:                          ${CERT_PEM}
+      KEY_PEM:                           ${KEY_PEM}
+      CA_CERT_PEM:                       ${CA_CERT_PEM}
+      CI_ENV:                            ${CI_ENV}
     ports:
       - "9390:9092"
       - "8380:8082"
@@ -49,6 +49,21 @@ services:
         condition: service_healthy
     entrypoint: [ "/streamfair_token_svc/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/start.sh" ]
     command: [ "/streamfair_token_svc/token_svc" ]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "-k", "https://streamfair_token_service:8082/streamfair/v1/healthz"]
+      interval:     1s
+      timeout:      1s
+      retries:      30
+      start_period: 5s
+
+  # a dummy service which blocks "docker compose up -d" from returning until all services are up & healthy
+  app-healthy:
+    image: alpine:latest
+    container_name: service_status
+    command: [ "echo", "all services are up & healthy" ]
+    depends_on:
+      api:
+        condition: service_healthy
 
 networks:
   db_access_network:

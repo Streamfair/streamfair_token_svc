@@ -38,6 +38,23 @@ services:
         condition: service_healthy
     entrypoint: [ "/streamfair_token_svc/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/start.sh" ]
     command: [ "/streamfair_token_svc/token_svc" ]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "-k", "https://streamfair_token_service:8082/streamfair/v1/healthz"]
+      interval:     1s
+      timeout:      1s
+      retries:      30
+      start_period: 5s
+    # volumes:
+    #   - ./ssl:/ssl:ro
+
+  # a dummy service which blocks "docker compose up -d" from returning until all services are up & healthy
+  app-healthy:
+    image: alpine:latest
+    container_name: service_status
+    command: [ "echo", "all services are up & healthy" ]
+    depends_on:
+      api:
+        condition: service_healthy
 
 networks:
   db_access_network:
