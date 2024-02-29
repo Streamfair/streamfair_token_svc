@@ -188,7 +188,7 @@ func CreateHealthClient(ctx context.Context, grpcServerAddress string, tlsConfig
 func ServeSwaggerUI(mux *http.ServeMux) error {
 	statikFS, err := fs.New()
 	if err != nil {
-		return fmt.Errorf("server: error while creating statik file system: %w", err)
+		return fmt.Errorf("error while creating statik file system: %w", err)
 	}
 
 	swaggerHandler := http.StripPrefix("/swagger/", http.FileServer(statikFS))
@@ -199,14 +199,26 @@ func ServeSwaggerUI(mux *http.ServeMux) error {
 
 // StartHTTPServer starts the HTTP server with TLS enabled.
 func StartHTTPServer(server *http.Server, config util.Config, certPath, keyPath string) error {
+	if viper.GetString("CI_ENV") == "true" {
+		tlsConfig, err := LoadTLSConfigWithTrustedCerts(config.CertPem, config.KeyPem, config.CaCertPem)
+		if err != nil {
+			log.Fatalf("Failed to load TLS config: %v", err)
+		}
+		
+		// Set the TLSConfig on the http.Server
+		server.TLSConfig = tlsConfig
+		certPath = ""
+		keyPath = ""
+	}
+
 	listener, err := net.Listen("tcp", config.HttpServerAddress)
 	if err != nil {
-		return fmt.Errorf("server: error while creating HTTP listener: %w", err)
+		return fmt.Errorf("error while creating HTTP listener: %w", err)
 	}
 
 	log.Printf("start HTTP Gateway server on %s", listener.Addr().String())
 	if err := server.ServeTLS(listener, certPath, keyPath); err != nil {
-		return fmt.Errorf("server: error while starting HTTP Gateway server: %w", err)
+		return fmt.Errorf("error while starting HTTP Gateway server: %w", err)
 	}
 
 	return nil
