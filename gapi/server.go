@@ -131,13 +131,13 @@ func (server *Server) RunGrpcGatewayServer() {
 }
 
 // LoadTLSConfigWithTrustedCerts loads the TLS configuration either from the specified paths
-// or using raw PEM data, depending on the CI_ENV environment variable.
+// or using raw PEM data, depending on the CI environment variable.
 func LoadTLSConfigWithTrustedCerts(certPath, keyPath, caCertPath string) (*tls.Config, error) {
 	var cert tls.Certificate
 	var err error
 
-	// Check if CI_ENV is set to true
-	if viper.GetString("CI_ENV") == "true" {
+	// Check if CI is set to true
+	if viper.GetString("CI") == "true" {
 		// Load the server's certificate and private key from raw PEM data
 		cert, err = tls.X509KeyPair([]byte(certPath), []byte(keyPath))
 	} else {
@@ -149,7 +149,7 @@ func LoadTLSConfigWithTrustedCerts(certPath, keyPath, caCertPath string) (*tls.C
 	}
 
 	var caCertPEM []byte
-	if viper.GetString("CI_ENV") == "true" {
+	if viper.GetString("CI") == "true" {
 		// Use raw PEM data for the CA's certificate
 		caCertPEM = []byte(caCertPath)
 	} else {
@@ -199,7 +199,7 @@ func ServeSwaggerUI(mux *http.ServeMux) error {
 
 // StartHTTPServer starts the HTTP server with TLS enabled.
 func StartHTTPServer(server *http.Server, config util.Config, certPath, keyPath string) error {
-	if viper.GetString("CI_ENV") == "true" {
+	if viper.GetString("CI") == "true" {
 		tlsConfig, err := LoadTLSConfigWithTrustedCerts(config.CertPem, config.KeyPem, config.CaCertPem)
 		if err != nil {
 			log.Fatalf("Failed to load TLS config: %v", err)

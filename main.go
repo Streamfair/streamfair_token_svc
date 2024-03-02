@@ -19,7 +19,7 @@ func main() {
 	fmt.Println("Hello, Streamfair Token Management Service!")
 	config, err := util.LoadConfig()
 	if err != nil {
-		log.Printf("config: error while loading config: %v\n", err)
+		log.Fatalf("config: error while loading config: %v\n", err)
 	}
 
 	if viper.GetString("CONTAINER_ENV") != "true" {
@@ -28,18 +28,18 @@ func main() {
 
 	poolConfig, err := pgxpool.ParseConfig(config.DBSource)
 	if err != nil {
-		log.Printf("config: error while parsing config: %v\n", err)
+		log.Fatalf("config: error while parsing config: %v\n", err)
 	}
 
 	conn, err := pgxpool.New(context.Background(), poolConfig.ConnString())
 	if err != nil {
-		log.Printf("db connection: unable to create connection pool: %v\n", err)
+		log.Fatalf("db connection: unable to create connection pool: %v\n", err)
 	}
 
 	store := db.NewStore(conn)
 	server, err := gapi.NewServer(config, store)
 	if err != nil {
-		log.Printf("server: error while creating server: %v\n", err)
+		log.Fatalf("server: error while creating server: %v\n", err)
 	}
 
 	runDBMigration(config.MigrationURL, config.DBSource)

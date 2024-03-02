@@ -79,10 +79,10 @@ network:
 
 # Service Management
 service_image:
-	docker build -t ${SERVICE_IMAGE}:${SERVICE_TAG} .
+	@docker build -t ${SERVICE_IMAGE}:${SERVICE_TAG} .
 
 service_container:
-	docker run --name ${SERVICE_IMAGE} --network ${DB_NETWORK} --network ${SERVICE_NETWORK} -p ${GRPC_GATEWAY_HOST_PORT}:${GRPC_GATEWAY_PORT} -p ${GRPC_HOST_PORT}:${GRPC_PORT} -e DB_SOURCE=${DB_SOURCE_SERVICE} ${SERVICE_IMAGE}:${SERVICE_TAG}
+	@docker run --name ${SERVICE_IMAGE} --network ${DB_NETWORK} --network ${SERVICE_NETWORK} -p ${GRPC_GATEWAY_HOST_PORT}:${GRPC_GATEWAY_PORT} -p ${GRPC_HOST_PORT}:${GRPC_PORT} -e DB_SOURCE=${DB_SOURCE_SERVICE} ${SERVICE_IMAGE}:${SERVICE_TAG}
 
 # DB Management
 db_container: network
@@ -95,22 +95,22 @@ createdb:
 	docker exec -it ${DB_CONTAINER_NAME} createdb --username=${DB_USER} --owner=${DB_USER} ${DB_NAME}
 
 dropdb:
-	docker exec -it ${DB_CONTAINER_NAME} dropdb ${DB_NAME}
+	@docker exec -it ${DB_CONTAINER_NAME} dropdb ${DB_NAME}
 
 createmigration:
 	migrate create -ext sql -dir ${MIGRATION_DIR} -seq ${MIGRATION_NAME}
 
 migrateup:
-	migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose up
+	@migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose up
 
 migrateup1:
-	migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose up 1
+	@migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose up 1
 
 migratedown:
-	migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose down
+	@migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose down
 
 migratedown1:
-	migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose down 1
+	@migrate -path ${MIGRATION_DIR} -database ${DB_SOURCE_MIGRATION} -verbose down 1
 
 dbclean: migratedown migrateup
 	clear

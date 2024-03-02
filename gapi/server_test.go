@@ -150,7 +150,7 @@ func waitForHTTPServer(config util.Config) error {
 	maxAttempts := 10
 	attemptInterval := time.Second
 
-	if viper.GetString("CI_ENV") != "true" {
+	if viper.GetString("CI") != "true" {
 		// Load  CA certificate
 		caCert, err = os.ReadFile(config.CaCertPem)
 		if err != nil {

@@ -22,7 +22,7 @@ jobs:
       CERT_PEM: ${{ secrets.CERT_PEM }}
       KEY_PEM: ${{ secrets.KEY_PEM }}
       CA_CERT_PEM: ${{ secrets.CA_CERT_PEM }}
-      CI_ENV: ${{ secrets.CI_ENV }}
+      # CI_ENV: ${{ secrets.CI_ENV }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}

@@ -37,7 +37,7 @@ services:
       CERT_PEM:                          ${CERT_PEM}
       KEY_PEM:                           ${KEY_PEM}
       CA_CERT_PEM:                       ${CA_CERT_PEM}
-      CI_ENV:                            ${CI_ENV}
+      # CI_ENV:                            ${CI_ENV}
     ports:
       - "9390:9092"
       - "8380:8082"
