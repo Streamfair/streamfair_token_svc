@@ -45,9 +45,6 @@ jobs:
         run: |
           mkdir ssl
 
-      - name: Set CI environment variable
-        run: echo "CI=true" >> $GITHUB_ENV
-
       - name: Run Docker Compose
         run: |
           docker compose -f docker-compose.ci.yaml up -d --build
@@ -56,7 +53,6 @@ jobs:
         if: failure()
         run: |
           docker logs streamfair_token_service
-          echo "CI ENV: ${CI}"
 
       - name: Stop Docker Compose
         run: |

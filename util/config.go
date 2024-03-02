@@ -51,6 +51,7 @@ func LoadConfig() (config Config, err error) {
 	// Check each environment variable individually and read the missing ones from the env file
 	// if the application is not running in a CI environment
 	for _, key := range keys {
+		log.Println("CI INSIDE CONFIG: ", viper.GetString("CI"))
 		if viper.GetString(key) == "" &&
 			viper.GetString("CI") != "true" {
 			value, err := readEnvFromFile(key)
