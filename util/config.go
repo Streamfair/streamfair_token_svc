@@ -78,7 +78,7 @@ func LoadConfig() (config Config, err error) {
 	keyPemPath := viper.GetString("KEY_PEM")
 	caCertPemPath := viper.GetString("CA_CERT_PEM")
 
-	if viper.GetString("CONTAINER_ENV") == "true" {
+	if viper.GetString("CONTAINER_ENV") == "true" && viper.Get("CI") != "true" {
 		if !strings.HasPrefix(certPemPath, "/") {
 			certPemPath = "/" + certPemPath
 		}
