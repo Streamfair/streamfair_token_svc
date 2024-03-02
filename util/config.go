@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -78,6 +79,7 @@ func LoadConfig() (config Config, err error) {
 	keyPemPath := viper.GetString("KEY_PEM")
 	caCertPemPath := viper.GetString("CA_CERT_PEM")
 
+	log.Println("CI ENV: ", viper.GetString("CI"))
 	if viper.GetString("CONTAINER_ENV") == "true" && viper.Get("CI") != "true" {
 		if !strings.HasPrefix(certPemPath, "/") {
 			certPemPath = "/" + certPemPath

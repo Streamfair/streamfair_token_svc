@@ -50,6 +50,11 @@ jobs:
         run: |
           docker compose -f docker-compose.ci.yaml up -d --build
 
+      - name: Inspect logs of streamfair_token_service
+        if: failure()
+        run: |
+          docker logs streamfair_token_service
+        
       - name: Stop Docker Compose
         run: |
           docker compose -f docker-compose.ci.yaml down
