@@ -22,7 +22,6 @@ jobs:
       CERT_PEM: ${{ secrets.CERT_PEM }}
       KEY_PEM: ${{ secrets.KEY_PEM }}
       CA_CERT_PEM: ${{ secrets.CA_CERT_PEM }}
-      # CI_ENV: ${{ secrets.CI_ENV }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
@@ -46,6 +45,9 @@ jobs:
         run: |
           mkdir ssl
 
+      - name: Set CI environment variable
+        run: echo "CI=true" >> $GITHUB_ENV
+
       - name: Run Docker Compose
         run: |
           docker compose -f docker-compose.ci.yaml up -d --build
@@ -54,7 +56,8 @@ jobs:
         if: failure()
         run: |
           docker logs streamfair_token_service
-        
+          echo "CI ENV: ${CI}"
+
       - name: Stop Docker Compose
         run: |
           docker compose -f docker-compose.ci.yaml down
