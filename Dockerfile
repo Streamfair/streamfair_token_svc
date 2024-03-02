@@ -12,10 +12,8 @@ WORKDIR /streamfair_token_svc
 # Copy the binary from the build stage
 COPY --from=build /streamfair_token_svc/token_svc .
 
-COPY start.sh .
-COPY wait-for.sh .
+COPY sh ./sh
 COPY db/migration ./db/migration
-COPY ssl ./ssl
 
 EXPOSE   8082
 EXPOSE   9092

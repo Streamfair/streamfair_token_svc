@@ -1,5 +1,5 @@
 ###  VARIABLES  ###
-include app.env
+-include ./env/db.env
 
 # Docker Network
 DB_NETWORK := db_access_network
@@ -24,9 +24,9 @@ DB_CONTAINER_NAME := token_service_db
 DB_PORT := 5432
 DB_HOST_PORT := 5434
 
-DB_NAME := $(shell grep POSTGRES_DB app.env | cut -d '=' -f2)
-DB_USER := $(shell grep POSTGRES_USER app.env | cut -d '=' -f2)
-DB_PASSWORD := $(shell grep POSTGRES_PASSWORD app.env | cut -d '=' -f2)
+DB_NAME := $(shell grep POSTGRES_DB ./env/db.env | cut -d '=' -f2)
+DB_USER := $(shell grep POSTGRES_USER ./env/db.env | cut -d '=' -f2)
+DB_PASSWORD := $(shell grep POSTGRES_PASSWORD ./env/db.env | cut -d '=' -f2)
 DB_HOST := localhost
 DB_SOURCE_SERVICE := "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_NETWORK}:${DB_HOST_PORT}/${DB_NAME}?sslmode=disable"
 DB_SOURCE_MIGRATION := "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_HOST_PORT}/${DB_NAME}?sslmode=disable"

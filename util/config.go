@@ -21,9 +21,6 @@ type Config struct {
 	CertPem              string        `mapstructure:"CERT_PEM"`
 	KeyPem               string        `mapstructure:"KEY_PEM"`
 	CaCertPem            string        `mapstructure:"CA_CERT_PEM"`
-	PostgresUser         string        `mapstructure:"POSTGRES_USER"`
-	PostgresPassword     string        `mapstructure:"POSTGRES_PASSWORD"`
-	PostgresDb           string        `mapstructure:"POSTGRES_DB"`
 }
 
 // LoadConfig loads the configuration from the given path.
@@ -69,22 +66,13 @@ func LoadConfig() (config Config, err error) {
 	if caCertPem := viper.GetString("CA_CERT_PEM"); caCertPem != "" {
 		config.CaCertPem = caCertPem
 	}
-	if postgresUser := viper.GetString("POSTGRES_USER"); postgresUser != "" {
-		config.PostgresUser = postgresUser
-	}
-	if postgresPassword := viper.GetString("POSTGRES_PASSWORD"); postgresPassword != "" {
-		config.PostgresPassword = postgresPassword
-	}
-	if postgresDb := viper.GetString("POSTGRES_DB"); postgresDb != "" {
-		config.PostgresDb = postgresDb
-	}
 	// If environment variables are not set, attempt to load from the config file
 	if (config.DBSource == "" || config.DBSourceLocal == ""  || config.HttpServerAddress == "" ||
 		config.GrpcServerAddress == "" || config.CertPem == "" || config.KeyPem == "" || config.CaCertPem == "") &&
 		viper.GetString("CI_ENV") != "true" && viper.GetString("CONTAINER_ENV") != "true" {
 
 		// Load configuration from the app.env file
-		viper.SetConfigFile("app.env")
+		viper.SetConfigFile("env/app.env")
 		if err := viper.ReadInConfig(); err != nil {
 			return config, err
 		}

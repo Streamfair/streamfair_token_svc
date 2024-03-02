@@ -13,7 +13,7 @@ services:
     networks:
       - db_access_network
     healthcheck:
-      test:         [ "CMD", "/usr/local/bin/pg_isready" ]
+      test:         [ "CMD", "/usr/local/bin/pg_isready", "-h", "db" ]
       start_period: 1s
       interval:     1s
       timeout:      1s
@@ -47,7 +47,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    entrypoint: [ "/streamfair_token_svc/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/start.sh" ]
+    entrypoint: [ "/streamfair_token_svc/sh/wait-for.sh", "db:5432", "--", "/streamfair_token_svc/sh/start.sh" ]
     command: [ "/streamfair_token_svc/token_svc" ]
     healthcheck:
       test: ["CMD", "curl", "--fail", "-s", "-k", "https://streamfair_token_service:8082/streamfair/v1/healthz"]
