@@ -40,8 +40,6 @@ func (server *Server) setupRouter() {
 
 	router.GET("/readiness", server.readinessCheck)
 
-	// router.POST("/users/login", server.loginUser)
-
 	// for later use
 	// authRoutes := router.Group("/").Use(authMiddleware(server.localTokenMaker))
 

@@ -2,7 +2,8 @@ package util
 
 import (
 	"fmt"
-	"log"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
@@ -51,7 +52,6 @@ func LoadConfig() (config Config, err error) {
 	// Check each environment variable individually and read the missing ones from the env file
 	// if the application is not running in a CI environment
 	for _, key := range keys {
-		log.Println("CI INSIDE CONFIG: ", viper.GetString("CI"))
 		if viper.GetString(key) == "" &&
 			viper.GetString("CI") != "true" {
 			value, err := readEnvFromFile(key)
@@ -80,7 +80,6 @@ func LoadConfig() (config Config, err error) {
 	keyPemPath := viper.GetString("KEY_PEM")
 	caCertPemPath := viper.GetString("CA_CERT_PEM")
 
-	log.Println("CI ENV: ", viper.GetString("CI"))
 	if viper.GetString("CONTAINER_ENV") == "true" && viper.Get("CI") != "true" {
 		if !strings.HasPrefix(certPemPath, "/") {
 			certPemPath = "/" + certPemPath
@@ -97,12 +96,26 @@ func LoadConfig() (config Config, err error) {
 	config.KeyPem = keyPemPath
 	config.CaCertPem = caCertPemPath
 
+	if viper.GetString("CONTAINER_ENV") != "true" {
+		config.DBSource = config.DBSourceLocal
+	}
+	
 	return config, err
 }
 
 // readEnvFromFile reads the missing key from the configuration file.
 func readEnvFromFile(key string) (string, error) {
-	viper.SetConfigFile("env/app.env")
+	// Determine the project root dynamically.
+	_, filename, _, _ := runtime.Caller(0)
+	projectRoot := filepath.Join(filepath.Dir(filename), "../.")
+
+	// Construct the absolute path to the configuration file.
+	configPath := filepath.Join(projectRoot, "env", "app.env")
+
+	// Set the absolute path as the config file.
+	viper.SetConfigFile(configPath)
+
+	// viper.SetConfigFile("env/app.env")
 	if err := viper.ReadInConfig(); err != nil {
 		return "", err
 	}

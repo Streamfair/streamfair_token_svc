@@ -12,7 +12,6 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/spf13/viper"
 )
 
 func main() {
@@ -20,10 +19,6 @@ func main() {
 	config, err := util.LoadConfig()
 	if err != nil {
 		log.Fatalf("config: error while loading config: %v\n", err)
-	}
-
-	if viper.GetString("CONTAINER_ENV") != "true" {
-		config.DBSource = config.DBSourceLocal
 	}
 
 	poolConfig, err := pgxpool.ParseConfig(config.DBSource)
