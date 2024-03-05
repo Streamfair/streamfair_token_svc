@@ -411,39 +411,6 @@
         ]
       }
     },
-    "/streamfair/v1/blacklist_refresh_token": {
-      "post": {
-        "summary": "Blacklist Refresh Token",
-        "description": "Blacklist a refresh token.",
-        "operationId": "TokenService_BlacklistRefreshToken",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "token",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TokenService"
-        ]
-      }
-    },
     "/streamfair/v1/create_refresh_token": {
       "post": {
         "summary": "Create Refresh Token",
@@ -478,50 +445,16 @@
         ]
       }
     },
-    "/streamfair/v1/delete_refresh_token/{id}": {
-      "post": {
-        "summary": "Delete Refresh Token by ID",
-        "description": "Delete a refresh token by its ID.",
-        "operationId": "TokenService_DeleteRefreshToken",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "TokenService"
-        ]
-      }
-    },
-    "/streamfair/v1/get_refresh_token_by_id/{id}": {
+    "/streamfair/v1/get_refresh_token_by_id": {
       "post": {
         "summary": "Get Refresh Token by ID",
         "description": "Get a refresh token by its ID.",
-        "operationId": "TokenService_GetRefreshTokenByID",
+        "operationId": "TokenService_GetRefreshTokenById",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetRefreshTokenByIDResponse"
+              "$ref": "#/definitions/pbGetRefreshTokenByIdResponse"
             }
           },
           "default": {
@@ -533,11 +466,12 @@
         },
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "schema": {
+              "$ref": "#/definitions/pbGetRefreshTokenByIdRequest"
+            }
           }
         ],
         "tags": [
@@ -545,7 +479,7 @@
         ]
       }
     },
-    "/streamfair/v1/get_refresh_token_by_value/{refreshToken}": {
+    "/streamfair/v1/get_refresh_token_by_value": {
       "post": {
         "summary": "Get Refresh Token by Value",
         "description": "Get a refresh token by its value.",
@@ -566,10 +500,12 @@
         },
         "parameters": [
           {
-            "name": "refreshToken",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/pbGetRefreshTokenByValueRequest"
+            }
           }
         ],
         "tags": [
@@ -577,16 +513,156 @@
         ]
       }
     },
-    "/streamfair/v1/get_revoked_refresh_tokens": {
+    "/streamfair/v1/revoke_refresh_token_by_value": {
       "post": {
-        "summary": "Get Revoked Refresh Tokens",
-        "description": "Get all revoked refresh tokens.",
-        "operationId": "TokenService_GetRevokedRefreshTokens",
+        "summary": "Revoke Refresh Token by Value",
+        "description": "Revoke a refresh token by its value.",
+        "operationId": "TokenService_RevokeRefreshTokenByValue",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetRevokedRefreshTokensResponse"
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbRevokeRefreshTokenByValueRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TokenService"
+        ]
+      }
+    },
+    "/streamfair/v1/revoke_refresh_token_by_id": {
+      "post": {
+        "summary": "Revoke Refresh Token by ID",
+        "description": "Revoke a refresh token by its ID.",
+        "operationId": "TokenService_RevokeRefreshTokenById",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbRevokeRefreshTokenByIdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TokenService"
+        ]
+      }
+    },
+    "/streamfair/v1/delete_refresh_token_by_id": {
+      "post": {
+        "summary": "Delete Refresh Token by ID",
+        "description": "Delete a refresh token by its ID.",
+        "operationId": "TokenService_DeleteRefreshTokenById",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbDeleteRefreshTokenByIdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TokenService"
+        ]
+      }
+    },
+    "/streamfair/v1/delete_refresh_token_by_value": {
+      "post": {
+        "summary": "Delete Refresh Token by Value",
+        "description": "Delete a refresh token by its value.",
+        "operationId": "TokenService_DeleteRefreshTokenByValue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbDeleteRefreshTokenByValueRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TokenService"
+        ]
+      }
+    },
+    "/streamfair/v1/list_revoked_refresh_tokens": {
+      "post": {
+        "summary": "List Revoked Refresh Tokens",
+        "description": "List all revoked refresh tokens.",
+        "operationId": "TokenService_ListRevokedRefreshTokens",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbListRevokedRefreshTokensResponse"
             }
           },
           "default": {
@@ -650,40 +726,6 @@
             "required": false,
             "type": "integer",
             "format": "int32"
-          }
-        ],
-        "tags": [
-          "TokenService"
-        ]
-      }
-    },
-    "/streamfair/v1/revoke_refresh_token": {
-      "post": {
-        "summary": "Revoke Refresh Token",
-        "description": "Revoke a refresh token.",
-        "operationId": "TokenService_RevokeRefreshToken",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
           }
         ],
         "tags": [
@@ -768,12 +810,8 @@
           "type": "string",
           "format": "int64"
         },
-        "token": {
-          "type": "string"
-        },
         "expiresAt": {
-          "type": "string",
-          "format": "date-time"
+          "type": "string"
         }
       }
     },
@@ -805,6 +843,23 @@
         }
       }
     },
+    "pbDeleteRefreshTokenByIdRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "pbDeleteRefreshTokenByValueRequest": {
+      "type": "object",
+      "properties": {
+        "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
     "pbDeleteTokenByIdRequest": {
       "type": "object",
       "properties": {
@@ -822,11 +877,28 @@
         }
       }
     },
-    "pbGetRefreshTokenByIDResponse": {
+    "pbGetRefreshTokenByIdRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "pbGetRefreshTokenByIdResponse": {
       "type": "object",
       "properties": {
         "refreshToken": {
           "$ref": "#/definitions/pbRefreshToken"
+        }
+      }
+    },
+    "pbGetRefreshTokenByValueRequest": {
+      "type": "object",
+      "properties": {
+        "refreshToken": {
+          "type": "string"
         }
       }
     },
@@ -835,18 +907,6 @@
       "properties": {
         "refreshToken": {
           "$ref": "#/definitions/pbRefreshToken"
-        }
-      }
-    },
-    "pbGetRevokedRefreshTokensResponse": {
-      "type": "object",
-      "properties": {
-        "refreshTokens": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/pbRefreshToken"
-          }
         }
       }
     },
@@ -884,6 +944,18 @@
       }
     },
     "pbListRefreshTokensResponse": {
+      "type": "object",
+      "properties": {
+        "refreshTokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbRefreshToken"
+          }
+        }
+      }
+    },
+    "pbListRevokedRefreshTokensResponse": {
       "type": "object",
       "properties": {
         "refreshTokens": {
@@ -953,6 +1025,23 @@
         }
       }
     },
+    "pbRevokeRefreshTokenByIdRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "pbRevokeRefreshTokenByValueRequest": {
+      "type": "object",
+      "properties": {
+        "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
     "pbRevokeTokenByIdRequest": {
       "type": "object",
       "properties": {
@@ -1014,6 +1103,9 @@
         "userId": {
           "type": "string",
           "format": "int64"
+        },
+        "tokenType": {
+          "type": "string"
         }
       }
     },

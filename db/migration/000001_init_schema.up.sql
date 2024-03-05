@@ -3,7 +3,6 @@ CREATE SCHEMA "token_svc";
 CREATE TABLE "token_svc"."Tokens" (
   "id" BIGSERIAL PRIMARY KEY,
   "user_id" BIGINT NOT NULL,
-  "token_type" VARCHAR(20) DEFAULT 'access',
   "token" TEXT NOT NULL,
   "revoked" BOOLEAN NOT NULL DEFAULT false,
   "expires_at" TIMESTAMPTZ NOT NULL,

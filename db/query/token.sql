@@ -1,14 +1,13 @@
 -- name: CreateToken :one
 INSERT INTO "token_svc"."Tokens" (
     user_id,
-    token_type,
     token,
     expires_at
 ) VALUES (
-    $1, $2, $3, $4
+    $1, $2, $3
 ) RETURNING *;
 
--- name: GetTokenByID :one
+-- name: GetTokenById :one
 SELECT * FROM "token_svc"."Tokens" WHERE id = $1 LIMIT 1;
 
 -- name: GetTokenByValue :one
@@ -21,7 +20,6 @@ SELECT * FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2;
 UPDATE "token_svc"."Tokens" 
 SET
     user_id = COALESCE(sqlc.narg(user_id), user_id),
-    token_type = COALESCE(sqlc.narg(token_type), token_type),
     updated_at = now()
 WHERE id = sqlc.arg(id) RETURNING *;
 
@@ -29,13 +27,13 @@ WHERE id = sqlc.arg(id) RETURNING *;
 SELECT * FROM "token_svc"."Tokens" WHERE token = $1
 AND revoked = false AND expires_at > NOW() LIMIT 1;
 
--- name: RevokeTokenByID :exec
+-- name: RevokeTokenById :exec
 UPDATE "token_svc"."Tokens" SET revoked = true WHERE id = $1;
 
 -- name: RevokeTokenByValue :exec
 UPDATE "token_svc"."Tokens" SET revoked = true WHERE token = $1;
 
--- name: DeleteToken :exec
+-- name: DeleteTokenById :exec
 DELETE FROM "token_svc"."Tokens" WHERE id = $1;
 
 -- name: DeleteTokenByValue :exec

@@ -43,21 +43,30 @@ func (q *Queries) CreateRefreshToken(ctx context.Context, arg CreateRefreshToken
 	return i, err
 }
 
-const deleteRefreshToken = `-- name: DeleteRefreshToken :exec
+const deleteRefreshTokenById = `-- name: DeleteRefreshTokenById :exec
 DELETE FROM "token_svc"."RefreshTokens" WHERE id = $1
 `
 
-func (q *Queries) DeleteRefreshToken(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, deleteRefreshToken, id)
+func (q *Queries) DeleteRefreshTokenById(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, deleteRefreshTokenById, id)
 	return err
 }
 
-const getRefreshTokenByID = `-- name: GetRefreshTokenByID :one
+const deleteRefreshTokenByValue = `-- name: DeleteRefreshTokenByValue :exec
+DELETE FROM "token_svc"."RefreshTokens" WHERE token = $1
+`
+
+func (q *Queries) DeleteRefreshTokenByValue(ctx context.Context, token string) error {
+	_, err := q.db.Exec(ctx, deleteRefreshTokenByValue, token)
+	return err
+}
+
+const getRefreshTokenById = `-- name: GetRefreshTokenById :one
 SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."RefreshTokens" WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetRefreshTokenByID(ctx context.Context, id int64) (TokenSvcRefreshToken, error) {
-	row := q.db.QueryRow(ctx, getRefreshTokenByID, id)
+func (q *Queries) GetRefreshTokenById(ctx context.Context, id int64) (TokenSvcRefreshToken, error) {
+	row := q.db.QueryRow(ctx, getRefreshTokenById, id)
 	var i TokenSvcRefreshToken
 	err := row.Scan(
 		&i.ID,
@@ -166,12 +175,12 @@ func (q *Queries) ListRevokedRefreshTokens(ctx context.Context, arg ListRevokedR
 	return items, nil
 }
 
-const revokeRefreshTokenByID = `-- name: RevokeRefreshTokenByID :exec
+const revokeRefreshTokenById = `-- name: RevokeRefreshTokenById :exec
 UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE id = $1
 `
 
-func (q *Queries) RevokeRefreshTokenByID(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, revokeRefreshTokenByID, id)
+func (q *Queries) RevokeRefreshTokenById(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, revokeRefreshTokenById, id)
 	return err
 }
 

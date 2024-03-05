@@ -11,20 +11,21 @@ import (
 type Querier interface {
 	CreateRefreshToken(ctx context.Context, arg CreateRefreshTokenParams) (TokenSvcRefreshToken, error)
 	CreateToken(ctx context.Context, arg CreateTokenParams) (TokenSvcToken, error)
-	DeleteRefreshToken(ctx context.Context, id int64) error
-	DeleteToken(ctx context.Context, id int64) error
+	DeleteRefreshTokenById(ctx context.Context, id int64) error
+	DeleteRefreshTokenByValue(ctx context.Context, token string) error
+	DeleteTokenById(ctx context.Context, id int64) error
 	DeleteTokenByValue(ctx context.Context, token string) error
-	GetRefreshTokenByID(ctx context.Context, id int64) (TokenSvcRefreshToken, error)
+	GetRefreshTokenById(ctx context.Context, id int64) (TokenSvcRefreshToken, error)
 	GetRefreshTokenByValue(ctx context.Context, token string) (TokenSvcRefreshToken, error)
-	GetTokenByID(ctx context.Context, id int64) (TokenSvcToken, error)
+	GetTokenById(ctx context.Context, id int64) (TokenSvcToken, error)
 	GetTokenByValue(ctx context.Context, token string) (TokenSvcToken, error)
 	ListRefreshTokens(ctx context.Context, arg ListRefreshTokensParams) ([]TokenSvcRefreshToken, error)
 	ListRevokedRefreshTokens(ctx context.Context, arg ListRevokedRefreshTokensParams) ([]TokenSvcRefreshToken, error)
 	ListRevokedTokens(ctx context.Context, arg ListRevokedTokensParams) ([]TokenSvcToken, error)
 	ListTokens(ctx context.Context, arg ListTokensParams) ([]TokenSvcToken, error)
-	RevokeRefreshTokenByID(ctx context.Context, id int64) error
+	RevokeRefreshTokenById(ctx context.Context, id int64) error
 	RevokeRefreshTokenByValue(ctx context.Context, token string) error
-	RevokeTokenByID(ctx context.Context, id int64) error
+	RevokeTokenById(ctx context.Context, id int64) error
 	RevokeTokenByValue(ctx context.Context, token string) error
 	UpdateRefreshToken(ctx context.Context, arg UpdateRefreshTokenParams) (TokenSvcRefreshToken, error)
 	UpdateToken(ctx context.Context, arg UpdateTokenParams) (TokenSvcToken, error)

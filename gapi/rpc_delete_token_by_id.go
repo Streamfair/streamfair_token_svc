@@ -21,14 +21,14 @@ func (server *Server) DeleteTokenById(ctx context.Context, req *pb.DeleteTokenBy
 	}
 
 	// Verify the token exists in the database
-	_, err := server.store.GetTokenByID(ctx, idParam)
+	_, err := server.store.GetTokenById(ctx, idParam)
 	if err != nil {
 		// Handle database errors
 		return nil, handleDatabaseError(err)
 	}
 
 	// Delete the token from the database
-	err = server.store.DeleteToken(ctx, idParam)
+	err = server.store.DeleteTokenById(ctx, idParam)
 	if err != nil {
 		// Handle database errors
 		return nil, handleDatabaseError(err)

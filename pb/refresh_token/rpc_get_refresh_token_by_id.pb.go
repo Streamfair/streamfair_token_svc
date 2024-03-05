@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GetRefreshTokenByIDRequest struct {
+type GetRefreshTokenByIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -28,8 +28,8 @@ type GetRefreshTokenByIDRequest struct {
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *GetRefreshTokenByIDRequest) Reset() {
-	*x = GetRefreshTokenByIDRequest{}
+func (x *GetRefreshTokenByIdRequest) Reset() {
+	*x = GetRefreshTokenByIdRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -37,13 +37,13 @@ func (x *GetRefreshTokenByIDRequest) Reset() {
 	}
 }
 
-func (x *GetRefreshTokenByIDRequest) String() string {
+func (x *GetRefreshTokenByIdRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRefreshTokenByIDRequest) ProtoMessage() {}
+func (*GetRefreshTokenByIdRequest) ProtoMessage() {}
 
-func (x *GetRefreshTokenByIDRequest) ProtoReflect() protoreflect.Message {
+func (x *GetRefreshTokenByIdRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,19 +55,19 @@ func (x *GetRefreshTokenByIDRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRefreshTokenByIDRequest.ProtoReflect.Descriptor instead.
-func (*GetRefreshTokenByIDRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetRefreshTokenByIdRequest.ProtoReflect.Descriptor instead.
+func (*GetRefreshTokenByIdRequest) Descriptor() ([]byte, []int) {
 	return file_refresh_token_rpc_get_refresh_token_by_id_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetRefreshTokenByIDRequest) GetId() int64 {
+func (x *GetRefreshTokenByIdRequest) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-type GetRefreshTokenByIDResponse struct {
+type GetRefreshTokenByIdResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -75,8 +75,8 @@ type GetRefreshTokenByIDResponse struct {
 	RefreshToken *RefreshToken `protobuf:"bytes,1,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
 }
 
-func (x *GetRefreshTokenByIDResponse) Reset() {
-	*x = GetRefreshTokenByIDResponse{}
+func (x *GetRefreshTokenByIdResponse) Reset() {
+	*x = GetRefreshTokenByIdResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -84,13 +84,13 @@ func (x *GetRefreshTokenByIDResponse) Reset() {
 	}
 }
 
-func (x *GetRefreshTokenByIDResponse) String() string {
+func (x *GetRefreshTokenByIdResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRefreshTokenByIDResponse) ProtoMessage() {}
+func (*GetRefreshTokenByIdResponse) ProtoMessage() {}
 
-func (x *GetRefreshTokenByIDResponse) ProtoReflect() protoreflect.Message {
+func (x *GetRefreshTokenByIdResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -102,12 +102,12 @@ func (x *GetRefreshTokenByIDResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRefreshTokenByIDResponse.ProtoReflect.Descriptor instead.
-func (*GetRefreshTokenByIDResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetRefreshTokenByIdResponse.ProtoReflect.Descriptor instead.
+func (*GetRefreshTokenByIdResponse) Descriptor() ([]byte, []int) {
 	return file_refresh_token_rpc_get_refresh_token_by_id_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetRefreshTokenByIDResponse) GetRefreshToken() *RefreshToken {
+func (x *GetRefreshTokenByIdResponse) GetRefreshToken() *RefreshToken {
 	if x != nil {
 		return x.RefreshToken
 	}
@@ -123,10 +123,10 @@ var file_refresh_token_rpc_get_refresh_token_by_id_proto_rawDesc = []byte{
 	0x6f, 0x12, 0x02, 0x70, 0x62, 0x1a, 0x21, 0x72, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x5f, 0x74,
 	0x6f, 0x6b, 0x65, 0x6e, 0x2f, 0x72, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x5f, 0x74, 0x6f, 0x6b,
 	0x65, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2c, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x52,
-	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x44, 0x52,
+	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x64, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x22, 0x54, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x52, 0x65, 0x66,
-	0x72, 0x65, 0x73, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x44, 0x52, 0x65, 0x73,
+	0x72, 0x65, 0x73, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x0d, 0x72, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68,
 	0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x70,
 	0x62, 0x2e, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x0c,
@@ -152,12 +152,12 @@ func file_refresh_token_rpc_get_refresh_token_by_id_proto_rawDescGZIP() []byte {
 
 var file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_refresh_token_rpc_get_refresh_token_by_id_proto_goTypes = []interface{}{
-	(*GetRefreshTokenByIDRequest)(nil),  // 0: pb.GetRefreshTokenByIDRequest
-	(*GetRefreshTokenByIDResponse)(nil), // 1: pb.GetRefreshTokenByIDResponse
+	(*GetRefreshTokenByIdRequest)(nil),  // 0: pb.GetRefreshTokenByIdRequest
+	(*GetRefreshTokenByIdResponse)(nil), // 1: pb.GetRefreshTokenByIdResponse
 	(*RefreshToken)(nil),                // 2: pb.RefreshToken
 }
 var file_refresh_token_rpc_get_refresh_token_by_id_proto_depIdxs = []int32{
-	2, // 0: pb.GetRefreshTokenByIDResponse.refresh_token:type_name -> pb.RefreshToken
+	2, // 0: pb.GetRefreshTokenByIdResponse.refresh_token:type_name -> pb.RefreshToken
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -173,7 +173,7 @@ func file_refresh_token_rpc_get_refresh_token_by_id_proto_init() {
 	file_refresh_token_refresh_token_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRefreshTokenByIDRequest); i {
+			switch v := v.(*GetRefreshTokenByIdRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -185,7 +185,7 @@ func file_refresh_token_rpc_get_refresh_token_by_id_proto_init() {
 			}
 		}
 		file_refresh_token_rpc_get_refresh_token_by_id_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRefreshTokenByIDResponse); i {
+			switch v := v.(*GetRefreshTokenByIdResponse); i {
 			case 0:
 				return &v.state
 			case 1:

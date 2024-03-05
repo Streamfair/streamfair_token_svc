@@ -6,8 +6,6 @@ package db
 
 import (
 	"time"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type TokenSvcRefreshToken struct {
@@ -21,12 +19,11 @@ type TokenSvcRefreshToken struct {
 }
 
 type TokenSvcToken struct {
-	ID        int64       `json:"id"`
-	UserID    int64       `json:"user_id"`
-	TokenType pgtype.Text `json:"token_type"`
-	Token     string      `json:"token"`
-	Revoked   bool        `json:"revoked"`
-	ExpiresAt time.Time   `json:"expires_at"`
-	CreatedAt time.Time   `json:"created_at"`
-	UpdatedAt time.Time   `json:"updated_at"`
+	ID        int64     `json:"id"`
+	UserID    int64     `json:"user_id"`
+	Token     string    `json:"token"`
+	Revoked   bool      `json:"revoked"`
+	ExpiresAt time.Time `json:"expires_at"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

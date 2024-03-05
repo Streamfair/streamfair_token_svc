@@ -2,7 +2,6 @@ package gapi
 
 import (
 	"context"
-	"fmt"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
 	pb "github.com/Streamfair/streamfair_token_svc/pb/token"
@@ -12,7 +11,6 @@ import (
 )
 
 func (server *Server) UpdateToken(ctx context.Context, req *pb.UpdateTokenRequest) (*pb.UpdateTokenResponse, error) {
-	fmt.Printf("UpdateTokenRequest: %v\n", req)
 	// Validate the request
 	violations := validateUpdateTokenRequest(req)
 	if len(violations) > 0 {
@@ -21,9 +19,8 @@ func (server *Server) UpdateToken(ctx context.Context, req *pb.UpdateTokenReques
 
 	// Update the token in the database
 	dbToken, err := server.store.UpdateToken(ctx, db.UpdateTokenParams{
-		UserID:    pgtype.Int8{Int64: req.GetUserId(), Valid: req.UserId != nil},
-		TokenType: pgtype.Text{String: req.GetTokenType(), Valid: req.TokenType != nil},
-		ID:        req.GetId(),
+		UserID: pgtype.Int8{Int64: req.GetUserId(), Valid: req.UserId != nil},
+		ID:     req.GetId(),
 	})
 	if err != nil {
 		return nil, handleDatabaseError(err)
@@ -49,14 +46,6 @@ func validateUpdateTokenRequest(req *pb.UpdateTokenRequest) (violations []*Custo
 			violations = append(violations, (&CustomError{
 				StatusCode: codes.NotFound,
 			}).WithDetails("user_id", err))
-		}
-	}
-
-	if req.GetTokenType() != "" {
-		if err := validator.ValidateTokenType(req.GetTokenType()); err != nil {
-			violations = append(violations, (&CustomError{
-				StatusCode: codes.InvalidArgument,
-			}).WithDetails("token_type", err))
 		}
 	}
 

@@ -20,7 +20,7 @@ func (server *Server) GetTokenById(ctx context.Context, req *pb.GetTokenByIdRequ
 	}
 
 	// Verify the token exists in the database
-	token, err := server.store.GetTokenByID(ctx, idParam)
+	token, err := server.store.GetTokenById(ctx, idParam)
 	if err != nil {
 		// Handle database errors
 		return nil, handleDatabaseError(err)

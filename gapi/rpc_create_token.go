@@ -7,7 +7,6 @@ import (
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
 	pb "github.com/Streamfair/streamfair_token_svc/pb/token"
 	"github.com/Streamfair/streamfair_token_svc/validator"
-	"github.com/jackc/pgx/v5/pgtype"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -29,7 +28,6 @@ func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenReques
 	// Save the token to the database
 	dbToken, err := server.store.CreateToken(ctx, db.CreateTokenParams{
 		UserID:    req.GetUserId(),
-		TokenType: pgtype.Text{String: "access", Valid: true},
 		Token:     accessToken,
 		ExpiresAt: accessPayload.ExpiredAt,
 	})

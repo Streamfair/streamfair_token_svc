@@ -15,33 +15,25 @@ import (
 const createToken = `-- name: CreateToken :one
 INSERT INTO "token_svc"."Tokens" (
     user_id,
-    token_type,
     token,
     expires_at
 ) VALUES (
-    $1, $2, $3, $4
-) RETURNING id, user_id, token_type, token, revoked, expires_at, created_at, updated_at
+    $1, $2, $3
+) RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
 type CreateTokenParams struct {
-	UserID    int64       `json:"user_id"`
-	TokenType pgtype.Text `json:"token_type"`
-	Token     string      `json:"token"`
-	ExpiresAt time.Time   `json:"expires_at"`
+	UserID    int64     `json:"user_id"`
+	Token     string    `json:"token"`
+	ExpiresAt time.Time `json:"expires_at"`
 }
 
 func (q *Queries) CreateToken(ctx context.Context, arg CreateTokenParams) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, createToken,
-		arg.UserID,
-		arg.TokenType,
-		arg.Token,
-		arg.ExpiresAt,
-	)
+	row := q.db.QueryRow(ctx, createToken, arg.UserID, arg.Token, arg.ExpiresAt)
 	var i TokenSvcToken
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
-		&i.TokenType,
 		&i.Token,
 		&i.Revoked,
 		&i.ExpiresAt,
@@ -51,12 +43,12 @@ func (q *Queries) CreateToken(ctx context.Context, arg CreateTokenParams) (Token
 	return i, err
 }
 
-const deleteToken = `-- name: DeleteToken :exec
+const deleteTokenById = `-- name: DeleteTokenById :exec
 DELETE FROM "token_svc"."Tokens" WHERE id = $1
 `
 
-func (q *Queries) DeleteToken(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, deleteToken, id)
+func (q *Queries) DeleteTokenById(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, deleteTokenById, id)
 	return err
 }
 
@@ -69,17 +61,16 @@ func (q *Queries) DeleteTokenByValue(ctx context.Context, token string) error {
 	return err
 }
 
-const getTokenByID = `-- name: GetTokenByID :one
-SELECT id, user_id, token_type, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE id = $1 LIMIT 1
+const getTokenById = `-- name: GetTokenById :one
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetTokenByID(ctx context.Context, id int64) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, getTokenByID, id)
+func (q *Queries) GetTokenById(ctx context.Context, id int64) (TokenSvcToken, error) {
+	row := q.db.QueryRow(ctx, getTokenById, id)
 	var i TokenSvcToken
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
-		&i.TokenType,
 		&i.Token,
 		&i.Revoked,
 		&i.ExpiresAt,
@@ -90,7 +81,7 @@ func (q *Queries) GetTokenByID(ctx context.Context, id int64) (TokenSvcToken, er
 }
 
 const getTokenByValue = `-- name: GetTokenByValue :one
-SELECT id, user_id, token_type, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE token = $1 LIMIT 1
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE token = $1 LIMIT 1
 `
 
 func (q *Queries) GetTokenByValue(ctx context.Context, token string) (TokenSvcToken, error) {
@@ -99,7 +90,6 @@ func (q *Queries) GetTokenByValue(ctx context.Context, token string) (TokenSvcTo
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
-		&i.TokenType,
 		&i.Token,
 		&i.Revoked,
 		&i.ExpiresAt,
@@ -110,7 +100,7 @@ func (q *Queries) GetTokenByValue(ctx context.Context, token string) (TokenSvcTo
 }
 
 const listRevokedTokens = `-- name: ListRevokedTokens :many
-SELECT id, user_id, token_type, token, revoked, expires_at, created_at, updated_at
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at
 FROM "token_svc"."Tokens"
 WHERE revoked = true ORDER BY created_at DESC LIMIT $1 OFFSET $2
 `
@@ -132,7 +122,6 @@ func (q *Queries) ListRevokedTokens(ctx context.Context, arg ListRevokedTokensPa
 		if err := rows.Scan(
 			&i.ID,
 			&i.UserID,
-			&i.TokenType,
 			&i.Token,
 			&i.Revoked,
 			&i.ExpiresAt,
@@ -150,7 +139,7 @@ func (q *Queries) ListRevokedTokens(ctx context.Context, arg ListRevokedTokensPa
 }
 
 const listTokens = `-- name: ListTokens :many
-SELECT id, user_id, token_type, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2
 `
 
 type ListTokensParams struct {
@@ -170,7 +159,6 @@ func (q *Queries) ListTokens(ctx context.Context, arg ListTokensParams) ([]Token
 		if err := rows.Scan(
 			&i.ID,
 			&i.UserID,
-			&i.TokenType,
 			&i.Token,
 			&i.Revoked,
 			&i.ExpiresAt,
@@ -187,12 +175,12 @@ func (q *Queries) ListTokens(ctx context.Context, arg ListTokensParams) ([]Token
 	return items, nil
 }
 
-const revokeTokenByID = `-- name: RevokeTokenByID :exec
+const revokeTokenById = `-- name: RevokeTokenById :exec
 UPDATE "token_svc"."Tokens" SET revoked = true WHERE id = $1
 `
 
-func (q *Queries) RevokeTokenByID(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, revokeTokenByID, id)
+func (q *Queries) RevokeTokenById(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, revokeTokenById, id)
 	return err
 }
 
@@ -209,24 +197,21 @@ const updateToken = `-- name: UpdateToken :one
 UPDATE "token_svc"."Tokens" 
 SET
     user_id = COALESCE($1, user_id),
-    token_type = COALESCE($2, token_type),
     updated_at = now()
-WHERE id = $3 RETURNING id, user_id, token_type, token, revoked, expires_at, created_at, updated_at
+WHERE id = $2 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
 type UpdateTokenParams struct {
-	UserID    pgtype.Int8 `json:"user_id"`
-	TokenType pgtype.Text `json:"token_type"`
-	ID        int64       `json:"id"`
+	UserID pgtype.Int8 `json:"user_id"`
+	ID     int64       `json:"id"`
 }
 
 func (q *Queries) UpdateToken(ctx context.Context, arg UpdateTokenParams) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, updateToken, arg.UserID, arg.TokenType, arg.ID)
+	row := q.db.QueryRow(ctx, updateToken, arg.UserID, arg.ID)
 	var i TokenSvcToken
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
-		&i.TokenType,
 		&i.Token,
 		&i.Revoked,
 		&i.ExpiresAt,
@@ -237,7 +222,7 @@ func (q *Queries) UpdateToken(ctx context.Context, arg UpdateTokenParams) (Token
 }
 
 const verifyToken = `-- name: VerifyToken :one
-SELECT id, user_id, token_type, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE token = $1
+SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE token = $1
 AND revoked = false AND expires_at > NOW() LIMIT 1
 `
 
@@ -247,7 +232,6 @@ func (q *Queries) VerifyToken(ctx context.Context, token string) (TokenSvcToken,
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
-		&i.TokenType,
 		&i.Token,
 		&i.Revoked,
 		&i.ExpiresAt,

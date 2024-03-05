@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/Streamfair/streamfair_token_svc/pb/refresh_token";
+
+message RevokeRefreshTokenByIdRequest {
+    int64 id = 1;
+}

@@ -6,10 +6,10 @@ import "refresh_token/refresh_token.proto";
 
 option go_package = "github.com/Streamfair/streamfair_token_svc/pb/refresh_token";
 
-message GetRefreshTokenByIDRequest {
+message GetRefreshTokenByIdRequest {
     int64 id = 1;
 }
 
-message GetRefreshTokenByIDResponse {
+message GetRefreshTokenByIdResponse {
     RefreshToken refresh_token = 1;
 }

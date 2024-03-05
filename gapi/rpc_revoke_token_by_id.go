@@ -22,7 +22,7 @@ func (server *Server) RevokeTokenById(ctx context.Context, req *pb.RevokeTokenBy
 	}
 
 	// Verify the token exists in the database
-	token, err := server.store.GetTokenByID(ctx, idParam)
+	token, err := server.store.GetTokenById(ctx, idParam)
 	if err != nil {
 		// Handle database errors
 		return nil, handleDatabaseError(err)
@@ -37,7 +37,7 @@ func (server *Server) RevokeTokenById(ctx context.Context, req *pb.RevokeTokenBy
 	}
 
 	// Revoke the token in the database
-	err = server.store.RevokeTokenByID(ctx, idParam)
+	err = server.store.RevokeTokenById(ctx, idParam)
 	if err != nil {
 		// Handle database errors
 		return nil, handleDatabaseError(err)

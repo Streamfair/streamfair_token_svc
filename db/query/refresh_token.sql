@@ -7,7 +7,7 @@ INSERT INTO "token_svc"."RefreshTokens" (
     $1, $2, $3
 ) RETURNING *;
 
--- name: GetRefreshTokenByID :one
+-- name: GetRefreshTokenById :one
 SELECT * FROM "token_svc"."RefreshTokens" WHERE id = $1 LIMIT 1;
 
 -- name: GetRefreshTokenByValue :one
@@ -23,20 +23,23 @@ SET
     updated_at = now()
 WHERE id = sqlc.arg(id) RETURNING *;
 
--- name: DeleteRefreshToken :exec
-DELETE FROM "token_svc"."RefreshTokens" WHERE id = $1;
-
 -- name: VerifyRefreshToken :one
 SELECT * FROM "token_svc"."RefreshTokens"
 WHERE token = $1 AND revoked = false AND expires_at > NOW() LIMIT 1;
+
+-- name: RevokeRefreshTokenById :exec
+UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE id = $1;
+
+-- name: RevokeRefreshTokenByValue :exec
+UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE token = $1;
+
+-- name: DeleteRefreshTokenById :exec
+DELETE FROM "token_svc"."RefreshTokens" WHERE id = $1;
+
+-- name: DeleteRefreshTokenByValue :exec
+DELETE FROM "token_svc"."RefreshTokens" WHERE token = $1;
 
 -- name: ListRevokedRefreshTokens :many
 SELECT *
 FROM "token_svc"."RefreshTokens"
 WHERE revoked = true ORDER BY created_at DESC LIMIT $1 OFFSET $2;
-
--- name: RevokeRefreshTokenByID :exec
-UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE id = $1;
-
--- name: RevokeRefreshTokenByValue :exec
-UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE token = $1;
