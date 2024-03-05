@@ -5,6 +5,7 @@ services:
     container_name: streamfair_token_service_db
     environment:
       CONTAINER_ENV:     true
+      ENVIRONMENT:       development
       POSTGRES_DB:       ${POSTGRES_DB}
       POSTGRES_USER:     ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -25,8 +26,9 @@ services:
       dockerfile: Dockerfile
     container_name: streamfair_token_service
     environment:
-      CONTAINER_ENV:                     true
       CI:                                true
+      CONTAINER_ENV:                     true
+      ENVIRONMENT:                       development
       DB_SOURCE_TOKEN_SERVICE:           ${DB_SOURCE_TOKEN_SERVICE}
       MIGRATION_URL:                     ${MIGRATION_URL}
       HTTP_SERVER_ADDRESS_TOKEN_SERVICE: ${HTTP_SERVER_ADDRESS_TOKEN_SERVICE}
