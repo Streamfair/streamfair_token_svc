@@ -22,7 +22,7 @@ func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenReques
 	duration, _ := time.ParseDuration(req.GetExpiresAt())
 	accessToken, accessPayload, err := server.localTokenMaker.CreateLocalToken(duration)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to create access token.")
+		return nil, status.Errorf(codes.Internal, "failed to create access token")
 	}
 
 	// Save the token to the database
