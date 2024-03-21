@@ -59,8 +59,7 @@ service TokenService {
 
 	rpc GetTokenById(GetTokenByIdRequest) returns (GetTokenByIdResponse) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/get_token_by_id"
-			body: "*"
+			get: "/streamfair/v1/get_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a token by its ID.",
@@ -92,8 +91,7 @@ service TokenService {
 
 	rpc RevokeTokenById(RevokeTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/revoke_token_by_id"
-			body: "*"
+			post: "/streamfair/v1/revoke_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Revoke a token by its ID.",
@@ -103,8 +101,7 @@ service TokenService {
 
 	rpc DeleteTokenById(DeleteTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/delete_token_by_id"
-			body: "*"
+			delete: "/streamfair/v1/delete_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Delete a token by its ID.",
@@ -179,8 +176,7 @@ service TokenService {
 
 	rpc GetRefreshTokenById(GetRefreshTokenByIdRequest) returns (GetRefreshTokenByIdResponse) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/get_refresh_token_by_id"
-			body: "*"
+			get: "/streamfair/v1/get_refresh_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Get a refresh token by its ID.",
@@ -212,7 +208,7 @@ service TokenService {
 
 	rpc RevokeRefreshTokenById(RevokeRefreshTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/revoke_refresh_token_by_id"
+			post: "/streamfair/v1/revoke_refresh_token_by_id/{id}"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -223,8 +219,7 @@ service TokenService {
 
 	rpc DeleteRefreshTokenById(DeleteRefreshTokenByIdRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
-			post: "/streamfair/v1/delete_refresh_token_by_id"
-			body: "*"
+			delete: "/streamfair/v1/delete_refresh_token_by_id/{id}"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			description: "Delete a refresh token by its ID.",

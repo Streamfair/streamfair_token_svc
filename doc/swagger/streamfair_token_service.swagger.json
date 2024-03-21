@@ -55,8 +55,8 @@
         ]
       }
     },
-    "/streamfair/v1/get_token_by_id": {
-      "post": {
+    "/streamfair/v1/get_token_by_id/{id}": {
+      "get": {
         "summary": "Get Token by ID",
         "description": "Get a token by its ID.",
         "operationId": "TokenService_GetTokenById",
@@ -76,12 +76,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbGetTokenByIdRequest"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -158,7 +157,7 @@
         ]
       }
     },
-    "/streamfair/v1/revoke_token_by_id": {
+    "/streamfair/v1/revoke_token_by_id/{id}": {
       "post": {
         "summary": "Revoke Token by ID",
         "description": "Revoke a token by its ID.",
@@ -180,12 +179,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbRevokeTokenByIdRequest"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -193,8 +191,8 @@
         ]
       }
     },
-    "/streamfair/v1/delete_token_by_id": {
-      "post": {
+    "/streamfair/v1/delete_token_by_id/{id}": {
+      "delete": {
         "summary": "Delete Token by ID",
         "description": "Delete a token by its ID.",
         "operationId": "TokenService_DeleteTokenById",
@@ -215,12 +213,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbDeleteTokenByIdRequest"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -445,8 +442,8 @@
         ]
       }
     },
-    "/streamfair/v1/get_refresh_token_by_id": {
-      "post": {
+    "/streamfair/v1/get_refresh_token_by_id/{id}": {
+      "get": {
         "summary": "Get Refresh Token by ID",
         "description": "Get a refresh token by its ID.",
         "operationId": "TokenService_GetRefreshTokenById",
@@ -466,12 +463,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbGetRefreshTokenByIdRequest"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -548,7 +544,7 @@
         ]
       }
     },
-    "/streamfair/v1/revoke_refresh_token_by_id": {
+    "/streamfair/v1/revoke_refresh_token_by_id/{id}": {
       "post": {
         "summary": "Revoke Refresh Token by ID",
         "description": "Revoke a refresh token by its ID.",
@@ -570,11 +566,18 @@
         },
         "parameters": [
           {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbRevokeRefreshTokenByIdRequest"
+              "$ref": "#/definitions/TokenServiceRevokeRefreshTokenByIdBody"
             }
           }
         ],
@@ -583,8 +586,8 @@
         ]
       }
     },
-    "/streamfair/v1/delete_refresh_token_by_id": {
-      "post": {
+    "/streamfair/v1/delete_refresh_token_by_id/{id}": {
+      "delete": {
         "summary": "Delete Refresh Token by ID",
         "description": "Delete a refresh token by its ID.",
         "operationId": "TokenService_DeleteRefreshTokenById",
@@ -605,12 +608,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbDeleteRefreshTokenByIdRequest"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -803,6 +805,9 @@
     }
   },
   "definitions": {
+    "TokenServiceRevokeRefreshTokenByIdBody": {
+      "type": "object"
+    },
     "pbCreateRefreshTokenRequest": {
       "type": "object",
       "properties": {
@@ -843,15 +848,6 @@
         }
       }
     },
-    "pbDeleteRefreshTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
     "pbDeleteRefreshTokenByValueRequest": {
       "type": "object",
       "properties": {
@@ -860,29 +856,11 @@
         }
       }
     },
-    "pbDeleteTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
     "pbDeleteTokenByValueRequest": {
       "type": "object",
       "properties": {
         "token": {
           "type": "string"
-        }
-      }
-    },
-    "pbGetRefreshTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
@@ -907,15 +885,6 @@
       "properties": {
         "refreshToken": {
           "$ref": "#/definitions/pbRefreshToken"
-        }
-      }
-    },
-    "pbGetTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
@@ -1025,29 +994,11 @@
         }
       }
     },
-    "pbRevokeRefreshTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
     "pbRevokeRefreshTokenByValueRequest": {
       "type": "object",
       "properties": {
         "refreshToken": {
           "type": "string"
-        }
-      }
-    },
-    "pbRevokeTokenByIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
