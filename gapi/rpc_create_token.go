@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
+	pb "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/token"
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
-	pb "github.com/Streamfair/streamfair_token_svc/pb/token"
 	"github.com/Streamfair/streamfair_token_svc/validator"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenRequest) (*pb.CreateTokenResponse, error) {
@@ -37,6 +38,11 @@ func (server *Server) CreateToken(ctx context.Context, req *pb.CreateTokenReques
 
 	rsp := &pb.CreateTokenResponse{
 		Token: convertToken(dbToken),
+		Payload: &pb.TokenPayload{
+			Uuid:     accessPayload.ID.String(),
+			IssuedAt: timestamppb.New(accessPayload.IssuedAt),
+			ExpiredAt: timestamppb.New(accessPayload.ExpiredAt),
+		},
 	}
 
 	return rsp, nil

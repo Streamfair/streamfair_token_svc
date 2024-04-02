@@ -40,8 +40,10 @@ MIGRATION_NAME := init_schema
 
 # Proto
 ## ADJUST FOR EACH SERVICE ##
-PROTO_DIR := proto
-PB_DIR := pb
+COMMON_PROTO_DIR := ../CommonProto
+COMMON_PROTO_ERROR_DIR := ../CommonProto/error
+PROTO_DIR := ../CommonProto/TokenService/proto
+PB_DIR := ../CommonProto/TokenService/pb
 TOKEN_DIR := token
 REFRESH_TOKEN_DIR := refresh_token
 
@@ -153,27 +155,51 @@ mock:
 
 # Proto Generation
 ## ADJUST FOR EACH SERVICE ##
-proto: proto_core proto_token proto_rftoken
+proto: proto_core
 
-proto_core: clean_pb
-	protoc --proto_path=$(PROTO_DIR) --go_out=$(PB_DIR) --go_opt=paths=source_relative \
-	--go-grpc_out=$(PB_DIR) --go-grpc_opt=paths=source_relative \
-	--grpc-gateway_out=$(PB_DIR) --grpc-gateway_opt=paths=source_relative \
-	--openapiv2_out=$(SWAGGER_DIR) --openapiv2_opt=allow_merge=true,merge_file_name=${SWAGGER_DOC_NAME},preserve_rpc_order=true \
-	$(PROTO_DIR)/*.proto
+proto_core: clean_pb proto_token proto_rftoken proto_errors
+	protoc \
+		--proto_path=$(PROTO_DIR) \
+		--proto_path=${COMMON_PROTO_DIR} \
+		--go_out=$(PB_DIR) \
+		--go_opt=paths=source_relative,Mtoken_svc.proto=github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb \
+		--go-grpc_out=${PB_DIR} \
+		--go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=${PB_DIR} \
+		--grpc-gateway_opt=paths=source_relative \
+		${PROTO_DIR}/*.proto
 	statik -src=./$(SWAGGER_DIR) -dest=./doc
 
 proto_token: clean_token_dir
-	protoc --proto_path=$(PROTO_DIR) --go_out=$(PB_DIR) --go_opt=paths=source_relative \
-	--go-grpc_out=$(PB_DIR) --go-grpc_opt=paths=source_relative \
-	--grpc-gateway_out=$(PB_DIR) --grpc-gateway_opt=paths=source_relative \
-	$(PROTO_DIR)/$(TOKEN_DIR)/*.proto
+	protoc \
+		--proto_path=${PROTO_DIR} \
+		--proto_path=${COMMON_PROTO_DIR} \
+		--go_out=${PB_DIR} \
+		--go_opt=paths=source_relative,Mtoken/rpc_create_token.proto=github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/token \
+		--go-grpc_out=${PB_DIR} \
+		--go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=${PB_DIR} \
+		--grpc-gateway_opt=paths=source_relative \
+		$(PROTO_DIR)/$(TOKEN_DIR)/*.proto
 
 proto_rftoken: clean_refresh_token_dir
-	protoc --proto_path=$(PROTO_DIR) --go_out=$(PB_DIR) --go_opt=paths=source_relative \
-	--go-grpc_out=$(PB_DIR) --go-grpc_opt=paths=source_relative \
-	--grpc-gateway_out=$(PB_DIR) --grpc-gateway_opt=paths=source_relative \
-	$(PROTO_DIR)/$(REFRESH_TOKEN_DIR)/*.proto
+	protoc \
+		--proto_path=${PROTO_DIR} \
+		--proto_path=${COMMON_PROTO_DIR} \
+		--go_out=${PB_DIR} \
+		--go_opt=paths=source_relative,Mrefresh_token/rpc_create_refresh_token.proto=github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/refresh_token \
+		--go-grpc_out=${PB_DIR} \
+		--go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=${PB_DIR} \
+		--grpc-gateway_opt=paths=source_relative \
+		$(PROTO_DIR)/$(REFRESH_TOKEN_DIR)/*.proto
+
+proto_errors:
+	protoc \
+		--proto_path=${COMMON_PROTO_ERROR_DIR} \
+		--go_out=${COMMON_PROTO_ERROR_DIR} \
+		--go_opt=paths=source_relative \
+		${COMMON_PROTO_ERROR_DIR}/*.proto
 
 clean_pb:
 	rm -f $(PB_DIR)/*.go

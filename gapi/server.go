@@ -12,7 +12,7 @@ import (
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
 	_ "github.com/Streamfair/streamfair_token_svc/doc/statik"
-	"github.com/Streamfair/streamfair_token_svc/pb"
+	"github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb"
 	"github.com/Streamfair/streamfair_token_svc/token"
 	"github.com/Streamfair/streamfair_token_svc/util"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"

@@ -2,8 +2,8 @@ package gapi
 
 import (
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
-	pb_rtoken "github.com/Streamfair/streamfair_token_svc/pb/refresh_token"
-	pb_token "github.com/Streamfair/streamfair_token_svc/pb/token"
+	pb_rtoken "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/refresh_token"
+	pb_token "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/token"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
