@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	pb "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/token"
+	pb "github.com/Streamfair/common_proto/TokenService/pb/token"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
 )

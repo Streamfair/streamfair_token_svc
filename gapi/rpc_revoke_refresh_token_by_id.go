@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	pb "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/refresh_token"
+	pb "github.com/Streamfair/common_proto/TokenService/pb/refresh_token"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	db "github.com/Streamfair/streamfair_token_svc/db/sqlc"
-	pb "github.com/Streamfair/streamfair_token_svc/common_proto/TokenService/pb/token"
+	pb "github.com/Streamfair/common_proto/TokenService/pb/token"
 	"github.com/Streamfair/streamfair_token_svc/validator"
 	"google.golang.org/grpc/codes"
 )
