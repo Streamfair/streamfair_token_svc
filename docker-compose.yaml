@@ -62,4 +62,4 @@ networks:
   db_access_network:
     driver: bridge
   streamfair_internal_network:
-    driver: bridge
+    external: true

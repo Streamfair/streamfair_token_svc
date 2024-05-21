@@ -1,17 +1,8 @@
 # Combined Build and Test Stage
 FROM golang:1.22.0-alpine3.19 AS build
 WORKDIR /streamfair_token_svc
+
 COPY . .
-
-# Install git
-RUN apk update && apk add --no-cache git
-
-# Set GOPRIVATE environment variable
-ENV GOPRIVATE=github.com/Streamfair/streamfair_user_svc,github.com/Streamfair/streamfair_session_svc,github.com/Streamfair/streamfair_token_svc,github.com/Streamfair/streamfair_idp,github.com/Streamfair/common_proto
-
-# Add .netrc file for GitHub authentication
-COPY .netrc /root/.netrc
-RUN chmod 600 /root/.netrc
 
 RUN go mod tidy
 
@@ -33,4 +24,5 @@ EXPOSE   9092
 CMD [ "/streamfair_token_svc/token_svc" ]
 ENTRYPOINT [ "/streamfair_token_svc/start.sh" ]
 
-RUN apk add --no-cache bash curl git
+# Install bash and curl in the final image
+RUN apk add --no-cache bash curl
