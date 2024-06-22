@@ -195,28 +195,6 @@ func (q *Queries) RevokeTokenByValue(ctx context.Context, token string) error {
 	return err
 }
 
-const updateToken = `-- name: UpdateToken :one
-UPDATE "token_svc"."Tokens" 
-SET
-    updated_at = now()
-WHERE id = $1 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
-`
-
-func (q *Queries) UpdateToken(ctx context.Context, id int64) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, updateToken, id)
-	var i TokenSvcToken
-	err := row.Scan(
-		&i.ID,
-		&i.UserID,
-		&i.Token,
-		&i.Revoked,
-		&i.ExpiresAt,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
-}
-
 const verifyToken = `-- name: VerifyToken :one
 SELECT id, user_id, token, revoked, expires_at, created_at, updated_at FROM "token_svc"."Tokens" WHERE token = $1
 AND revoked = false AND expires_at > NOW() LIMIT 1

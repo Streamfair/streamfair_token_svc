@@ -20,13 +20,6 @@ SELECT * FROM "token_svc"."RefreshTokens" WHERE token = $1 LIMIT 1;
 -- name: ListRefreshTokens :many
 SELECT * FROM "token_svc"."RefreshTokens" ORDER BY id LIMIT $1 OFFSET $2;
 
--- name: UpdateRefreshToken :one
-UPDATE "token_svc"."RefreshTokens" 
-SET 
-    user_id = COALESCE(sqlc.narg(user_id), user_id),
-    updated_at = now()
-WHERE id = sqlc.arg(id) RETURNING *;
-
 -- name: VerifyRefreshToken :one
 SELECT * FROM "token_svc"."RefreshTokens"
 WHERE token = $1 AND revoked = false AND expires_at > NOW() LIMIT 1;

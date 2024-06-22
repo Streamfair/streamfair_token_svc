@@ -20,12 +20,6 @@ SELECT * FROM "token_svc"."Tokens" WHERE token = $1 LIMIT 1;
 -- name: ListTokens :many
 SELECT * FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2;
 
--- name: UpdateToken :one
-UPDATE "token_svc"."Tokens" 
-SET
-    updated_at = now()
-WHERE id = sqlc.arg(id) RETURNING *;
-
 -- name: VerifyToken :one
 SELECT * FROM "token_svc"."Tokens" WHERE token = $1
 AND revoked = false AND expires_at > NOW() LIMIT 1;

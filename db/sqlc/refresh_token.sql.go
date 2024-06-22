@@ -8,8 +8,6 @@ package db
 import (
 	"context"
 	"time"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createRefreshToken = `-- name: CreateRefreshToken :one
@@ -195,34 +193,6 @@ UPDATE "token_svc"."RefreshTokens" SET revoked = true WHERE token = $1
 func (q *Queries) RevokeRefreshTokenByValue(ctx context.Context, token string) error {
 	_, err := q.db.Exec(ctx, revokeRefreshTokenByValue, token)
 	return err
-}
-
-const updateRefreshToken = `-- name: UpdateRefreshToken :one
-UPDATE "token_svc"."RefreshTokens" 
-SET 
-    user_id = COALESCE($1, user_id),
-    updated_at = now()
-WHERE id = $2 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
-`
-
-type UpdateRefreshTokenParams struct {
-	UserID pgtype.Int8 `json:"user_id"`
-	ID     int64       `json:"id"`
-}
-
-func (q *Queries) UpdateRefreshToken(ctx context.Context, arg UpdateRefreshTokenParams) (TokenSvcRefreshToken, error) {
-	row := q.db.QueryRow(ctx, updateRefreshToken, arg.UserID, arg.ID)
-	var i TokenSvcRefreshToken
-	err := row.Scan(
-		&i.ID,
-		&i.UserID,
-		&i.Token,
-		&i.Revoked,
-		&i.ExpiresAt,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
 }
 
 const verifyRefreshToken = `-- name: VerifyRefreshToken :one

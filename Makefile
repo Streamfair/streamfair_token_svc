@@ -40,10 +40,10 @@ MIGRATION_NAME := init_schema
 
 # Proto
 ## ADJUST FOR EACH SERVICE ##
-COMMON_PROTO_DIR := ../CommonProto
-COMMON_PROTO_ERROR_DIR := ../CommonProto/error
-PROTO_DIR := ../CommonProto/TokenService/proto
-PB_DIR := ../CommonProto/TokenService/pb
+COMMON_PROTO_DIR := ../common_proto
+COMMON_PROTO_ERROR_DIR := ../common_proto/error
+PROTO_DIR := ../common_proto/TokenService/proto
+PB_DIR := ../common_proto/TokenService/pb
 TOKEN_DIR := token
 REFRESH_TOKEN_DIR := refresh_token
 
