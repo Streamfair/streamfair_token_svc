@@ -333,18 +333,18 @@ func (mr *MockStoreMockRecorder) UpdateRefreshToken(ctx, arg any) *gomock.Call {
 }
 
 // UpdateToken mocks base method.
-func (m *MockStore) UpdateToken(ctx context.Context, arg db.UpdateTokenParams) (db.TokenSvcToken, error) {
+func (m *MockStore) UpdateToken(ctx context.Context, id int64) (db.TokenSvcToken, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateToken", ctx, arg)
+	ret := m.ctrl.Call(m, "UpdateToken", ctx, id)
 	ret0, _ := ret[0].(db.TokenSvcToken)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // UpdateToken indicates an expected call of UpdateToken.
-func (mr *MockStoreMockRecorder) UpdateToken(ctx, arg any) *gomock.Call {
+func (mr *MockStoreMockRecorder) UpdateToken(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateToken", reflect.TypeOf((*MockStore)(nil).UpdateToken), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateToken", reflect.TypeOf((*MockStore)(nil).UpdateToken), ctx, id)
 }
 
 // VerifyRefreshToken mocks base method.

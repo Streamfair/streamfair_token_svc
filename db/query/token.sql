@@ -2,9 +2,13 @@
 INSERT INTO "token_svc"."Tokens" (
     user_id,
     token,
-    expires_at
+    expires_at,
+    created_at,
+    updated_at
 ) VALUES (
-    $1, $2, $3
+    $1, $2, $3,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
 ) RETURNING *;
 
 -- name: GetTokenById :one
@@ -19,7 +23,6 @@ SELECT * FROM "token_svc"."Tokens" ORDER BY id LIMIT $1 OFFSET $2;
 -- name: UpdateToken :one
 UPDATE "token_svc"."Tokens" 
 SET
-    user_id = COALESCE(sqlc.narg(user_id), user_id),
     updated_at = now()
 WHERE id = sqlc.arg(id) RETURNING *;
 

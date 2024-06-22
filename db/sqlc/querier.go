@@ -28,7 +28,7 @@ type Querier interface {
 	RevokeTokenById(ctx context.Context, id int64) error
 	RevokeTokenByValue(ctx context.Context, token string) error
 	UpdateRefreshToken(ctx context.Context, arg UpdateRefreshTokenParams) (TokenSvcRefreshToken, error)
-	UpdateToken(ctx context.Context, arg UpdateTokenParams) (TokenSvcToken, error)
+	UpdateToken(ctx context.Context, id int64) (TokenSvcToken, error)
 	VerifyRefreshToken(ctx context.Context, token string) (TokenSvcRefreshToken, error)
 	VerifyToken(ctx context.Context, token string) (TokenSvcToken, error)
 }

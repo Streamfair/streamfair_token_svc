@@ -16,9 +16,13 @@ const createRefreshToken = `-- name: CreateRefreshToken :one
 INSERT INTO "token_svc"."RefreshTokens" (
     user_id,
     token,
-    expires_at
+    expires_at,
+    created_at,
+    updated_at
 ) VALUES (
-    $1, $2, $3
+    $1, $2, $3,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
 ) RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 

@@ -8,17 +8,19 @@ package db
 import (
 	"context"
 	"time"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createToken = `-- name: CreateToken :one
 INSERT INTO "token_svc"."Tokens" (
     user_id,
     token,
-    expires_at
+    expires_at,
+    created_at,
+    updated_at
 ) VALUES (
-    $1, $2, $3
+    $1, $2, $3,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
 ) RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
@@ -196,18 +198,12 @@ func (q *Queries) RevokeTokenByValue(ctx context.Context, token string) error {
 const updateToken = `-- name: UpdateToken :one
 UPDATE "token_svc"."Tokens" 
 SET
-    user_id = COALESCE($1, user_id),
     updated_at = now()
-WHERE id = $2 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
+WHERE id = $1 RETURNING id, user_id, token, revoked, expires_at, created_at, updated_at
 `
 
-type UpdateTokenParams struct {
-	UserID pgtype.Int8 `json:"user_id"`
-	ID     int64       `json:"id"`
-}
-
-func (q *Queries) UpdateToken(ctx context.Context, arg UpdateTokenParams) (TokenSvcToken, error) {
-	row := q.db.QueryRow(ctx, updateToken, arg.UserID, arg.ID)
+func (q *Queries) UpdateToken(ctx context.Context, id int64) (TokenSvcToken, error) {
+	row := q.db.QueryRow(ctx, updateToken, id)
 	var i TokenSvcToken
 	err := row.Scan(
 		&i.ID,
