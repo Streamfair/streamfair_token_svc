@@ -1,4 +1,4 @@
-# Combined Build and Test Stage
+# Build Stage
 FROM golang:1.22.0-alpine3.19 AS build
 WORKDIR /streamfair_token_svc
 
